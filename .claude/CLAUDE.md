@@ -44,6 +44,19 @@ If you think there is even a 1% chance a skill might apply to what you are doing
 
 **The workflow chain auto-invokes:** brainstorming → writing-plans → subagent-driven-development → finishing-a-development-branch. You only need to trigger the first skill; the rest chain automatically.
 
+## Model Policy
+
+Use the right model for the right job to balance quality and cost.
+
+| Role | Model | Rationale |
+|------|-------|-----------|
+| Main conversation (brainstorm, plan, architect, coordinate) | Opus | Design judgment, architecture decisions |
+| Implementation subagents | Sonnet | Reliable code generation |
+| Spec compliance review subagents | Haiku | Mechanical checklist — fast and cheap |
+| Code quality review subagents | Sonnet | Needs judgment to catch subtle issues |
+
+When dispatching subagents via the Agent tool, always set the `model` parameter explicitly.
+
 ## Skills Available
 - **research** — deep-research a topic and save findings to `docs/research/`
 - **skill-creator** — create, test, and iteratively improve skills with quantitative evaluation
