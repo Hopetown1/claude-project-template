@@ -27,13 +27,22 @@ Start a session and describe what you want to build. The skills system activates
      └─ systematic-debugging (auto)     Triggers on "fix this" / "this is broken"
 ```
 
-## Skills (16 total)
+## Skills (21 total)
 
 ### Custom Skills
 | Skill | Purpose |
 |-------|---------|
 | **research** | Deep-research a topic via Perplexity/WebSearch, save to `docs/research/` |
 | **skill-creator** | Create, test, and improve skills with quantitative eval infrastructure |
+| **contrarian-research-partner** | Challenge assumptions, find blind spots, stress-test ideas via Socratic dialogue |
+| **excalidraw-diagram-skill** | Produce Excalidraw JSON diagrams for workflows, architectures, concepts |
+
+### Design Skills
+| Skill | Purpose |
+|-------|---------|
+| **design-foundation** | Establish project-wide design intent, brand, aesthetic direction, and design system v1 |
+| **ui-surface-design** | Design a specific surface (page/screen) with 2–3 variations against the design system |
+| **design-component-creation** | Fill a component gap in the design system (sole mutator of `design-system.json`) |
 
 ### Superpowers Skills
 | Skill | Purpose |
@@ -53,11 +62,34 @@ Start a session and describe what you want to build. The skills system activates
 | **writing-skills** | Create new skills using TDD applied to documentation |
 | **using-superpowers** | Bootstrap: ensures skills auto-trigger |
 
+## Design Workflow
+
+UI-heavy projects opt into a gated design workflow that composes with the normal skill chain. When `brainstorming` produces a spec describing visual surfaces or flows, you're asked to choose a **design depth** before planning begins:
+
+- **`full`** — run `design-foundation` (if `docs/design/02-system/design-system.json` is missing), then `ui-surface-design` per surface, then `writing-plans`.
+- **`function-first`** — plan immediately against a bare-minimum accessibility/structure baseline; a follow-up design pass is appended.
+- **`deferred`** — plan immediately with a blocking "design TBD" task gating any visible UI work.
+
+Design skills produce artifacts and return control to the orchestrator; they do not invoke `writing-plans` themselves.
+
+### Design Knowledge (`.claude/knowledge/design/`)
+
+Shared, project-agnostic resources the design skills load at runtime:
+
+- **`personas/`** — craft and critique personas (art-director, visual-designer, design-systems-architect, conversion-designer, onboarding-designer, data-designer, ux-writer, accessibility-specialist, design-critic, user-advocate) loaded into subagents based on the task.
+- **`aesthetic-references/`** — named directions (swiss-international, editorial, brutalist, tech-minimal, warm-organic, playful-maximalist) used as stakes, not templates.
+- **`domains/`** — craft knowledge (typography, color-and-contrast, layout-and-composition, accessibility-wcag).
+- **`schemas/`** — JSON schemas for brand foundation, design system, surface specs, component specs, intent.
+- **`intent-taxonomy.md`**, **`quality-bars.md`** — shared vocabulary and acceptance criteria.
+- **`scripts/validate-all.sh`** — runs schema validation across design artifacts.
+
 ## Directory Structure
 
 - **`.claude/CLAUDE.md`** — Project context: tech stack, commands, conventions, skills bootstrap.
 
 - **`.claude/skills/<name>/SKILL.md`** — Each skill's trigger description and instructions; one folder per skill.
+
+- **`.claude/knowledge/design/`** — Project-agnostic design resources (personas, aesthetic references, domain knowledge, schemas) loaded by design skills.
 
 - **`src/`** — All project source code; structure is project-specific.
 
@@ -66,6 +98,8 @@ Start a session and describe what you want to build. The skills system activates
 - **`docs/superpowers/specs/`** — Design specs produced by the brainstorming skill.
 
 - **`docs/superpowers/plans/`** — Implementation plans produced by the writing-plans skill.
+
+- **`docs/design/`** — Project-specific design artifacts: `00-foundation/`, `01-direction/`, `02-system/`, `03-surfaces/`, `04-flows/`, `05-handoff/`.
 
 - **`docs/architecture/`** — Architecture Decision Records (ADRs).
 
