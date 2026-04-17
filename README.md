@@ -14,6 +14,15 @@ Start a session and describe what you want to build. The skills system activates
      │
      ├─ brainstorming (auto)            Clarifying questions → 2-3 approaches → design spec
      │    │
+     │    │  ┄┄ design-depth gate ┄┄    if spec has visual surfaces
+     │    │                             pick: full │ function-first │ deferred
+     │    ┊
+     │    ┊  design-foundation          on 'full', if design-system.json is missing
+     │    ┊  (optional, once)           intent + brand + aesthetic + design system v1
+     │    ┊
+     │    ┊  ui-surface-design          on 'full', per surface
+     │    ┊  (optional, per surface)    2-3 variations → critic passes → surface spec
+     │    │
      │    ├─ writing-plans (auto)       Spec → granular tasks with actual code
      │    │    │
      │    │    ├─ subagent-driven-      Fresh agent per task + spec review + quality review
