@@ -48,6 +48,8 @@ Every schema has a valid and invalid example in `schemas/examples/`. Validate wi
 npx -y ajv-cli@5 validate -s schemas/<name>.schema.json -d schemas/examples/<name>.valid.json --spec=draft2020
 ```
 
+Each example pair is **self-contained** — the valid and invalid examples test the schema in isolation. Token and component names in one schema's example (e.g. `plan-card` in `surface-spec.valid.json`) may not match another schema's example (e.g. `design-system.valid.json` only defines `button`). This is intentional: schemas are validated independently, so examples are not required to mutually cross-reference. Do not edit examples to force cross-example consistency.
+
 ## Adding a new persona
 
 1. Copy the template structure from any existing persona file.

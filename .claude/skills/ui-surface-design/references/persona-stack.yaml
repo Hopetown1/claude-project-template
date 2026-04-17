@@ -62,3 +62,4 @@ always_loaded:
 critic_pass_personas:
   - personas/design-critic.md
   - personas/accessibility-specialist.md
+  - personas/user-advocate.md

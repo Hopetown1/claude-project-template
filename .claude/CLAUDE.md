@@ -94,4 +94,7 @@ Design skills do NOT invoke `writing-plans`; they return control to the orchestr
 - **receiving-code-review** — respond to review feedback with technical rigor
 - **dispatching-parallel-agents** — delegate independent tasks to concurrent agents
 - **writing-skills** — create new skills using TDD applied to documentation
+- **design-foundation** — establish project-wide design foundation (intent, brand, aesthetic direction, design system v1)
+- **ui-surface-design** — design specific visual surfaces with 2–3 variations using the design system
+- **design-component-creation** — fill component gaps in the design system (sole mutator of design-system.json)
 - **using-superpowers** — how to find and use skills (bootstrap)

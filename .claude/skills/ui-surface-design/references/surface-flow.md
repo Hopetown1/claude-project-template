@@ -89,6 +89,13 @@ If any rejected: re-spawn those subagents with the critic's feedback; one retry 
 
 If any fail: fix issues in the variation file (small fixes directly; larger ones → reject variation).
 
+**user-advocate pass (optional for large/complex surfaces):**
+- Trace the primary user flow across the surface end-to-end for each persona described in `personas/user-advocate.md`'s "User-advocacy scenarios" (skip scenarios that don't apply).
+- Flag friction, dead-ends, or confusion points.
+- Output: issue list with proposed fixes. The variation subagent (or orchestrator) addresses issues before Stage 6 user selection.
+
+On small or simple surfaces (empty states, error pages, single-CTA landing), skip this pass — the design-critic and accessibility passes suffice.
+
 ## Stage 6 — User selection
 
 Present surviving variations to the user. Markdown comparison:
