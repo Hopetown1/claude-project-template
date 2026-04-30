@@ -68,7 +68,10 @@ docs/design/
 │   └── brand-foundation.json
 ├── 01-direction/
 │   ├── explorations/
-│   │   └── direction-{a..f}.md
+│   │   ├── direction-{a..f}.md
+│   │   └── direction-{a..f}.json   # visual-preview sidecar
+│   ├── preview/
+│   │   └── index.html              # self-contained side-by-side preview
 │   └── selected-direction.md
 └── 02-system/
     ├── design-system.json        # v1.0.0

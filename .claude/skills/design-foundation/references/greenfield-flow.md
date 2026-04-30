@@ -41,14 +41,45 @@ Each subagent:
 - Wears the `art-director` persona (load `personas/art-director.md`)
 - Is given the intent + brand foundation + one specific aesthetic stake from a pre-selected distinct set (e.g., "editorial brutalist," "warm organic," "swiss precision," "tech-minimal with a twist," "playful maximalist," "raw editorial")
 - Also loads the relevant `aesthetic-references/*.md` file for its assigned direction as grounding
-- Produces a markdown file in `01-direction/explorations/direction-{letter}.md` with:
-  - Direction name + 3-adjective description
-  - Typography pairing with rationale
-  - Color palette (primitive tokens) with semantic role suggestions
-  - One "hero moment" mock description (signature component or moment)
-  - Motion character (short description: 120ms ease-out / 240ms spring / etc.)
-  - 3–5 reference vibes (named, not URLs)
-  - One-paragraph manifesto
+- Produces TWO files in `01-direction/explorations/`:
+
+**File A — `direction-{letter}.md`** (narrative):
+- Direction name + 3-adjective description
+- Typography pairing with rationale
+- Color palette (primitive tokens) with semantic role suggestions
+- One "hero moment" mock description (signature component or moment)
+- Motion character (short description: 120ms ease-out / 240ms spring / etc.)
+- 3–5 reference vibes (named, not URLs)
+- One-paragraph manifesto
+
+**File B — `direction-{letter}.json`** (visual-preview sidecar). Shape:
+```json
+{
+  "letter": "a",
+  "name": "Editorial Brutalist",
+  "adjectives": ["raw", "confident", "deliberate"],
+  "palette": [
+    { "token": "bg",         "value": "#0E0E0E", "role": "background",     "usagePercent": 55 },
+    { "token": "fg",         "value": "#F5F1E8", "role": "foreground",     "usagePercent": 22 },
+    { "token": "surface",    "value": "#1A1A1A", "role": "surface",        "usagePercent": 15 },
+    { "token": "accent",     "value": "#FF4A1C", "role": "action",         "usagePercent": 6  },
+    { "token": "muted-fg",   "value": "#8A857A", "role": "muted-foreground","usagePercent": 2 }
+  ],
+  "typography": {
+    "display": { "family": "Fraunces",   "weight": 700, "sizePx": 64, "googleFontsHref": "https://fonts.googleapis.com/css2?family=Fraunces:wght@700&display=swap" },
+    "body":    { "family": "Inter",      "weight": 400, "sizePx": 16, "googleFontsHref": "https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" },
+    "mono":    { "family": "JetBrains Mono", "weight": 400, "sizePx": 14, "googleFontsHref": "https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap" }
+  },
+  "motion": "200ms ease-out; chunky 1px-snap transitions; no bouncy springs",
+  "heroMoment": "Oversized serif headline ranging across 10 columns, single 1px hairline rule, accent color used only on a small all-caps eyebrow.",
+  "manifesto": "..."
+}
+```
+
+Constraints the subagent MUST honor:
+- `palette[].usagePercent` values sum to **100 ± 1**. These are intent percentages — what proportion of a typical page surface this color should occupy. Refuse to fabricate; think about hierarchy.
+- Every `googleFontsHref` is a real Google Fonts CSS2 URL for the named family/weight (no other CDNs in v0.1).
+- `palette` has 4–7 entries; do not pad with near-duplicates.
 
 **Critical:** explicitly instruct at least one subagent to "make a direction that feels risky." Explicit guard against all 4–6 landing in safe territory.
 
@@ -60,14 +91,33 @@ After all subagents return, run a design-critic convergence check (Sonnet agent,
 
 ## Stage 4 — User selection
 
-Present the N directions side-by-side (Markdown summary table with the 3-adjective descriptions and hero-moment one-liners).
+Generate a self-contained HTML preview that renders all N directions on one page, then ask the user to choose.
 
-Ask: "Pick one, combine two, reject all (new round), or refine a specific one?"
+**Build the preview:**
+1. Copy `references/preview-template.html` to `docs/design/01-direction/preview/index.html`.
+2. Read every `direction-{letter}.json` produced in Stage 3.
+3. Inject them into the template at the `<!-- DIRECTIONS_JSON -->` marker as a single `window.__DIRECTIONS = [...]` array literal (in letter order). Do NOT modify the template's HTML/CSS/JS otherwise.
+4. The template renders, per direction: a section header (name + 3 adjectives), a swatch row (each swatch sized by its `usagePercent` with hex/role labels), a horizontal stacked bar visualizing the same percentages, type samples in the actual webfonts (display headline, body paragraph, mono caption), and the hero-moment + manifesto as text.
 
-If user picks / hybrids:
-- Write `docs/design/01-direction/selected-direction.md` combining the selected direction(s) with any refinement notes from the user.
+**Present to the user:**
 
-If reject-all: re-enter Stage 3 with feedback. Max 2 full re-rounds before escalating to user ("we've tried several rounds; want to change the intent or brand foundation?").
+After writing the file, print exactly:
+
+```
+Preview ready. Open this in a browser:
+
+  <ABSOLUTE_PATH_TO>/docs/design/01-direction/preview/index.html
+
+Once you've looked, tell me: pick one (by letter), combine two (e.g. "A+C"), reject all (new round), or refine a specific one.
+```
+
+Use the absolute path on the user's OS. Do not auto-open the file.
+
+**On user response:**
+
+- **Pick / hybrid** → write `docs/design/01-direction/selected-direction.md` combining the selected direction(s) with any refinement notes. Keep the preview directory in place; it's a useful artifact.
+- **Reject-all** → re-enter Stage 3 with feedback. Max 2 full re-rounds before escalating ("we've tried several rounds; want to change the intent or brand foundation?").
+- **Refine** → re-spawn just that letter's subagent with the refinement note, regenerate its two files, rebuild the preview.
 
 ## Stage 5 — Design system v1 synthesis
 
