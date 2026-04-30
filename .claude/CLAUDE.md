@@ -98,3 +98,7 @@ Design skills do NOT invoke `writing-plans`; they return control to the orchestr
 - **ui-surface-design** — design specific visual surfaces with 2–3 variations using the design system
 - **design-component-creation** — fill component gaps in the design system (sole mutator of design-system.json)
 - **using-superpowers** — how to find and use skills (bootstrap)
+- **llm-council** — run a question/decision through 5 AI advisors who peer-review and synthesize a verdict (Karpathy's LLM Council methodology)
+- **para-audit** — audit an Obsidian vault's PARA structure and suggest reorganization moves
+- **contrarian-research-partner** — Socratic dialogue partner that challenges assumptions and pressure-tests strategic ideas
+- **excalidraw-diagram-skill** — create Excalidraw diagram JSON files to visualize workflows, architectures, or concepts
