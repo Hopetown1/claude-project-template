@@ -936,7 +936,7 @@ Create `.claude/skills/auto-improve/scripts/setup-run.sh`:
 # Sets up a new auto-improve run.
 # Usage: setup-run.sh
 # Prints the run-id on stdout. Side effects:
-#   - Cuts auto-improve/<run-id> from main
+#   - Cuts auto-improve/<run-id>/trunk from main
 #   - Creates docs/runs/<run-id>/{log.md,rejected_proposals/}
 #   - Pre-condition: working tree must be clean
 
@@ -956,7 +956,7 @@ fi
 
 scripts_dir="$(cd "$(dirname "$0")" && pwd)"
 run_id="$("$scripts_dir/compute-run-id.sh")"
-trunk="auto-improve/${run_id}"
+trunk="auto-improve/${run_id}/trunk"
 
 git checkout main
 git checkout -b "$trunk"
@@ -990,7 +990,7 @@ Expected: prints a run-id like `2026-05-15-01`. Verify:
 
 ```bash
 git branch --show-current
-# expect: auto-improve/<that-run-id>
+# expect: auto-improve/<that-run-id>/trunk
 
 ls docs/runs/<that-run-id>/
 # expect: log.md  rejected_proposals/
@@ -1002,9 +1002,9 @@ cat docs/runs/<that-run-id>/log.md
 - [ ] **Step 4: Cleanup test artifacts and return to main**
 
 ```bash
-RUN_ID=$(git branch --show-current | sed 's|auto-improve/||')
+RUN_ID=$(git branch --show-current | sed -E 's|auto-improve/(.*)/trunk|\1|')
 git checkout main
-git branch -D "auto-improve/${RUN_ID}"
+git branch -D "auto-improve/${RUN_ID}/trunk"
 rm -rf "docs/runs/${RUN_ID}"
 ```
 
@@ -1044,8 +1044,8 @@ pass_num="$(printf "%02d" "$2")"
 scope="$3"
 proposal="$4"
 
-trunk="auto-improve/${run_id}"
-branch="auto-improve/${run_id}/${pass_num}-${scope}-${proposal}"
+trunk="auto-improve/${run_id}/trunk"
+branch="auto-improve/${run_id}/passes/${pass_num}-${scope}-${proposal}"
 
 cd "$(git rev-parse --show-toplevel)"
 git checkout "$trunk" >/dev/null 2>&1
@@ -1075,7 +1075,7 @@ branch="$2"
 pass_num="$3"
 scope="$4"
 proposal="$5"
-trunk="auto-improve/${run_id}"
+trunk="auto-improve/${run_id}/trunk"
 
 cd "$(git rev-parse --show-toplevel)"
 git checkout "$trunk" >/dev/null 2>&1
@@ -1105,7 +1105,7 @@ old_branch="$2"
 pass_num="$3"
 scope="$4"
 proposal="$5"
-trunk="auto-improve/${run_id}"
+trunk="auto-improve/${run_id}/trunk"
 new_branch="auto-improve/${run_id}/rejected/${pass_num}-${scope}-${proposal}"
 
 cd "$(git rev-parse --show-toplevel)"
@@ -1145,7 +1145,7 @@ git log --first-parent --oneline -3
 
 # Cleanup
 git checkout main
-git branch -D "auto-improve/${RUN_ID}"
+git branch -D "auto-improve/${RUN_ID}/trunk"
 git branch -D "$BRANCH" 2>/dev/null || true
 rm -rf "docs/runs/${RUN_ID}"
 ```
@@ -1169,7 +1169,7 @@ git branch --list "auto-improve/${RUN_ID}/rejected/*"
 
 # Cleanup
 git checkout main
-git branch -D "auto-improve/${RUN_ID}"
+git branch -D "auto-improve/${RUN_ID}/trunk"
 git branch -D "$NEW_BRANCH"
 rm -rf "docs/runs/${RUN_ID}"
 ```
@@ -1292,7 +1292,7 @@ cat > /tmp/entry.json <<EOF
   "started": "2026-05-15T22:18:00Z",
   "ended": "2026-05-15T22:34:00Z",
   "verdict": "ACCEPTED",
-  "branch": "auto-improve/${RUN_ID}/01-hero-tighten-headline-rhythm",
+  "branch": "auto-improve/${RUN_ID}/passes/01-hero-tighten-headline-rhythm",
   "merge_sha": "abc1234",
   "proposal_text": "Tighten vertical rhythm in the hero from 1.4 to 1.25 line-height.",
   "critic_scores": { "design-system": 8.5, "ux": 8.0, "brand": 9.0, "a11y-perf": 9.5 },
@@ -1307,7 +1307,7 @@ cat "docs/runs/${RUN_ID}/log.md"
 
 # Cleanup
 git checkout main
-git branch -D "auto-improve/${RUN_ID}"
+git branch -D "auto-improve/${RUN_ID}/trunk"
 rm -rf "docs/runs/${RUN_ID}" /tmp/entry.json
 ```
 
@@ -1383,7 +1383,7 @@ cat "docs/runs/${RUN_ID}/rejected_proposals/hero.yaml"
 
 # Cleanup
 git checkout main
-git branch -D "auto-improve/${RUN_ID}"
+git branch -D "auto-improve/${RUN_ID}/trunk"
 rm -rf "docs/runs/${RUN_ID}"
 ```
 
@@ -1625,7 +1625,7 @@ cat "docs/runs/${RUN_ID}/log.md"
 
 # Cleanup
 git checkout main
-git branch -D "auto-improve/${RUN_ID}"
+git branch -D "auto-improve/${RUN_ID}/trunk"
 rm -rf "docs/runs/${RUN_ID}" /tmp/summary.json
 ```
 
@@ -2378,7 +2378,7 @@ Working tree must be clean. `main` branch must exist.
 
 On success, return:
 - `run_id`: the computed run-id
-- `trunk_branch`: `auto-improve/<run-id>`
+- `trunk_branch`: `auto-improve/<run-id>/trunk`
 - The session is now on the trunk branch with DESIGN_CONTRACT.md committed.
 ```
 
@@ -2505,7 +2505,7 @@ git branch --show-current
 ls "docs/runs/${RUN_ID}/"
 ```
 
-Expected: on `auto-improve/<run-id>` branch, log.md and rejected_proposals/ exist.
+Expected: on `auto-improve/<run-id>/trunk` branch, log.md and rejected_proposals/ exist.
 
 - [ ] **Step 4: Manually invoke design-contract writing**
 
@@ -2527,7 +2527,7 @@ Expected: contract file exists with all required sections; latest commit is "fea
 
 ```bash
 git checkout main
-git branch -D "auto-improve/${RUN_ID}"
+git branch -D "auto-improve/${RUN_ID}/trunk"
 rm -rf "docs/runs/${RUN_ID}" auto-improve.config.yaml backlog.yaml BRAND.md handoff-bundle DESIGN_CONTRACT.md
 ```
 
@@ -3114,7 +3114,7 @@ Parse the proposer's YAML output.
 
 ### State 2: IMPLEMENTING
 
-1. Compute `BRANCH_NAME = auto-improve/<RUN_ID>/<NN>-<scope-slug>-<proposal-slug>`.
+1. Compute `BRANCH_NAME = auto-improve/<RUN_ID>/passes/<NN>-<scope-slug>-<proposal-slug>`.
 2. Run `scripts/start-pass.sh <RUN_ID> <PASS_NUMBER> <scope-slug> <proposal-slug>`. Capture branch name.
 3. Dispatch implementer subagent with `prompts/implementer.md`. Inputs:
    - `RUN_ID`, `PASS_NUMBER`, `SCOPE`, `PROPOSAL_SLUG`, `PROPOSAL_TEXT`
@@ -3305,7 +3305,7 @@ Run `node scripts/finalize-run.mjs <RUN_ID> <stop-reason> <summary.json>`.
 ## Step 4: Hand off to the user
 
 Tell the user:
-- Trunk branch is `auto-improve/<RUN_ID>`, sitting N merges ahead of main.
+- Trunk branch is `auto-improve/<RUN_ID>/trunk`, sitting N merges ahead of main.
 - Run log is at `docs/runs/<RUN_ID>/log.md`.
 - Rejected proposals at `docs/runs/<RUN_ID>/rejected_proposals/`.
 - They can `git merge --ff-only`, squash-merge, cherry-pick, or discard.
@@ -3366,7 +3366,7 @@ Mid-run (or after one pass completes), run: `touch STOP`. Verify the next stop-c
 - [ ] **Step 4: Verify outputs**
 
 ```bash
-RUN_ID=$(git branch --show-current | sed 's|auto-improve/||')
+RUN_ID=$(git branch --show-current | sed -E 's|auto-improve/(.*)/trunk|\1|')
 cat "docs/runs/${RUN_ID}/log.md"
 ls "docs/runs/${RUN_ID}/rejected_proposals/" 2>/dev/null
 git log --first-parent --oneline -5
@@ -3378,8 +3378,8 @@ Expected: log.md has at least one Pass entry plus the Run summary block. Trunk h
 
 ```bash
 git checkout main
-git branch -D "auto-improve/${RUN_ID}" 2>/dev/null
-git branch --list "auto-improve/${RUN_ID}/*" -D 2>/dev/null
+git for-each-ref --format='%(refname:short)' "refs/heads/auto-improve/${RUN_ID}/*" \
+  | xargs -r git branch -D
 rm -rf "docs/runs/${RUN_ID}" auto-improve.config.yaml backlog.yaml BRAND.md handoff-bundle DESIGN_CONTRACT.md
 ```
 
@@ -3404,10 +3404,10 @@ The sample config's `wall_clock_hours: 1` will cap the run. Observe the logs in 
 - [ ] **Step 3: Inspect outcomes.**
 
 ```bash
-RUN_ID=$(git branch --show-current | sed 's|auto-improve/||')
+RUN_ID=$(git branch --show-current | sed -E 's|auto-improve/(.*)/trunk|\1|')
 cat "docs/runs/${RUN_ID}/log.md" | tail -100
-git log --first-parent --oneline auto-improve/$RUN_ID
-git branch --list "auto-improve/${RUN_ID}/*"
+git log --first-parent --oneline "auto-improve/${RUN_ID}/trunk"
+git branch --list "auto-improve/${RUN_ID}/passes/*"
 git branch --list "auto-improve/${RUN_ID}/rejected/*"
 ```
 
@@ -3510,15 +3510,15 @@ Inspect `docs/runs/<run-id>/log.md`. If you like what you see:
 
 \`\`\`bash
 git checkout main
-git merge --ff-only auto-improve/<run-id>
+git merge --ff-only auto-improve/<run-id>/trunk
 \`\`\`
 
 If you don't:
 
 \`\`\`bash
 git checkout main
-git branch -D auto-improve/<run-id>
-git branch --list "auto-improve/<run-id>/*" | xargs git branch -D
+git for-each-ref --format='%(refname:short)' "refs/heads/auto-improve/<run-id>/*" \
+  | xargs -r git branch -D
 \`\`\`
 
 ## Known shake-out items

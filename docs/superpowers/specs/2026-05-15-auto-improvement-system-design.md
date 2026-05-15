@@ -132,15 +132,17 @@ Trunk-based. All work for a run lands on a dedicated trunk branch cut from `main
 
 ### Naming
 
-- **Run trunk:** `auto-improve/<run-id>`
+- **Run trunk:** `auto-improve/<run-id>/trunk`
 - **Run-id:** `YYYY-MM-DD-NN`, where `NN` is a zero-padded sequence number computed by listing existing branches at run-start and picking the next.
-- **Pass branch:** `auto-improve/<run-id>/<pass-number>-<scope-slug>-<proposal-slug>`
+- **Pass branch:** `auto-improve/<run-id>/passes/<pass-number>-<scope-slug>-<proposal-slug>`
 - **Rejected pass branch:** `auto-improve/<run-id>/rejected/<pass-number>-<scope-slug>-<proposal-slug>`
 
 Examples:
-- `auto-improve/2026-05-15-01` (first run started 2026-05-15)
-- `auto-improve/2026-05-15-01/03-pricing-page-tighten-card-rhythm`
+- `auto-improve/2026-05-15-01/trunk` (trunk for the first run started 2026-05-15)
+- `auto-improve/2026-05-15-01/passes/03-pricing-page-tighten-card-rhythm`
 - `auto-improve/2026-05-15-01/rejected/07-hero-add-cta-hover-bloom`
+
+**Why nested.** Git stores branches as files under `.git/refs/heads/`. A flat scheme like `auto-improve/<run-id>` (trunk) plus `auto-improve/<run-id>/<pass-slug>` (pass) would require `auto-improve/<run-id>` to be both a file (the trunk ref) and a directory (containing the pass refs) simultaneously — git rejects this with `cannot lock ref ... exists`. Nesting the trunk one level deeper as `auto-improve/<run-id>/trunk` makes the `<run-id>` segment uniformly a directory.
 
 ### Lifecycle
 
@@ -148,16 +150,16 @@ Examples:
 Run start
   ├─ Compute run-id
   ├─ git checkout main && git pull
-  ├─ git checkout -b auto-improve/<run-id>
+  ├─ git checkout -b auto-improve/<run-id>/trunk
   ├─ Generate DESIGN_CONTRACT.md, commit to trunk
   └─ Begin pass loop
 
 Each pass
-  ├─ git checkout auto-improve/<run-id>
-  ├─ git checkout -b auto-improve/<run-id>/<pass-branch-name>
+  ├─ git checkout auto-improve/<run-id>/trunk
+  ├─ git checkout -b auto-improve/<run-id>/passes/<pass-branch-name>
   ├─ [pass state machine runs]
   ├─ ACCEPTED:  git checkout <trunk> && git merge --no-ff <pass-branch>
-  ├─ REJECTED:  git branch -m <pass-branch> auto-improve/<run-id>/rejected/<...>
+  ├─ REJECTED:  git branch -m auto-improve/<run-id>/passes/<...> auto-improve/<run-id>/rejected/<...>
   ├─ Append entry to docs/runs/<run-id>/log.md
   └─ Continue
 
@@ -321,7 +323,7 @@ The proposer reads this file before drafting. Its prompt forbids re-proposing se
 # Auto-improve run 2026-05-15-01
 
 Started: 2026-05-15 22:14
-Trunk: auto-improve/2026-05-15-01
+Trunk: auto-improve/2026-05-15-01/trunk
 Config: 10h wall clock, 5 iter cap, accept >=8
 
 ---
@@ -329,7 +331,7 @@ Config: 10h wall clock, 5 iter cap, accept >=8
 ## Pass 01 — hero — sharpen-headline-rhythm
 Started 22:18, ended 22:34 (16 min, 2 iterations)
 Verdict: ACCEPTED
-Branch: auto-improve/2026-05-15-01/01-hero-sharpen-headline-rhythm
+Branch: auto-improve/2026-05-15-01/passes/01-hero-sharpen-headline-rhythm
 Merge: a7f3b2c
 
 **Proposal:** [proposer's full proposal text]
