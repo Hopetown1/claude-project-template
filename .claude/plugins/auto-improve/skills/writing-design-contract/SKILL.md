@@ -1,5 +1,5 @@
 ---
-name: auto-improve:writing-design-contract
+name: writing-design-contract
 description: Use when generating DESIGN_CONTRACT.md at the start of an auto-improve run. Reads BRAND.md and handoff-bundle/ to produce a single plain-text contract that critics and implementers reference.
 ---
 

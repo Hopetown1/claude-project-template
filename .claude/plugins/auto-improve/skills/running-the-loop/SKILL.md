@@ -1,5 +1,5 @@
 ---
-name: auto-improve:running-the-loop
+name: running-the-loop
 description: Run an autonomous overnight loop that iteratively improves the website in this repo against BRAND.md and a Claude Design handoff bundle. Use when the user says "run the auto-improve loop", "start an overnight polish run", "auto-improve this site for N hours", "polish my site overnight", or any phrasing that asks for an unsupervised iteration loop. The loop runs until wall-clock budget, STOP file, or empty backlog.
 ---
 
@@ -31,7 +31,7 @@ PASSES_REJECTED = 0
 
 WHILE true:
   # Stop check
-  Run `node scripts/check-stop-conditions.mjs <start-iso> <wall-clock> <backlog-empty>`.
+  Run `node ${CLAUDE_PLUGIN_ROOT}/scripts/check-stop-conditions.mjs <start-iso> <wall-clock> <backlog-empty>`.
   IF exit code != 0: BREAK with stop reason from stdout.
 
   # Pick scope
@@ -56,7 +56,7 @@ WHILE true:
 
   # Scope-advance check
   scores_csv = SCOPE_SCORES[CURRENT_SCOPE.slug].join(",") (or "")
-  Run `node scripts/scope-advance-check.mjs <threshold> <window> <scores_csv>`.
+  Run `node ${CLAUDE_PLUGIN_ROOT}/scripts/scope-advance-check.mjs <threshold> <window> <scores_csv>`.
   IF stdout starts with "ADVANCE":
     SCOPES_COMPLETED.append(CURRENT_SCOPE.slug)
     SCOPE_ADVANCE_DECISION = "ADVANCE"
@@ -79,7 +79,7 @@ Build the run summary JSON:
 }
 ~~~
 
-Run `node scripts/finalize-run.mjs <RUN_ID> <stop-reason> <summary.json>`.
+Run `node ${CLAUDE_PLUGIN_ROOT}/scripts/finalize-run.mjs <RUN_ID> <stop-reason> <summary.json>`.
 
 ## Step 4: Hand off to the user
 

@@ -1,5 +1,5 @@
 ---
-name: auto-improve:setting-up-a-run
+name: setting-up-a-run
 description: Use when starting a new auto-improve run. Validates inputs, cuts trunk branch, creates run directory, generates DESIGN_CONTRACT.md. Returns the run-id for subsequent steps.
 ---
 
@@ -22,7 +22,7 @@ Working tree must be clean. `main` branch must exist.
 1. **Validate config.** Run:
 
    ```bash
-   node .claude/skills/auto-improve/scripts/validate-config.mjs auto-improve.config.yaml
+   node ${CLAUDE_PLUGIN_ROOT}/scripts/validate-config.mjs auto-improve.config.yaml
    ```
 
    If exit code != 0, fail with the validator's error output. Do not proceed.
@@ -30,7 +30,7 @@ Working tree must be clean. `main` branch must exist.
 2. **Validate backlog.** Run:
 
    ```bash
-   node .claude/skills/auto-improve/scripts/validate-backlog.mjs backlog.yaml
+   node ${CLAUDE_PLUGIN_ROOT}/scripts/validate-backlog.mjs backlog.yaml
    ```
 
    If exit code != 0, fail.
@@ -46,7 +46,7 @@ Working tree must be clean. `main` branch must exist.
 4. **Set up the run.** Run:
 
    ```bash
-   .claude/skills/auto-improve/scripts/setup-run.sh
+   ${CLAUDE_PLUGIN_ROOT}/scripts/setup-run.sh
    ```
 
    Capture stdout — that's the run-id (e.g., `2026-05-15-01`).

@@ -15,49 +15,49 @@
 This plan creates the following files. Each has one clear responsibility:
 
 **Skills (instructions):**
-- `.claude/skills/auto-improve/running-the-loop/SKILL.md` — entry skill; outer loop and state machine
-- `.claude/skills/auto-improve/setting-up-a-run/SKILL.md` — one-time per-run setup
-- `.claude/skills/auto-improve/writing-design-contract/SKILL.md` — DESIGN_CONTRACT.md generation
-- `.claude/skills/auto-improve/executing-a-pass/SKILL.md` — per-pass state machine
+- `.claude/plugins/auto-improve/skills/running-the-loop/SKILL.md` — entry skill; outer loop and state machine
+- `.claude/plugins/auto-improve/skills/setting-up-a-run/SKILL.md` — one-time per-run setup
+- `.claude/plugins/auto-improve/skills/writing-design-contract/SKILL.md` — DESIGN_CONTRACT.md generation
+- `.claude/plugins/auto-improve/skills/executing-a-pass/SKILL.md` — per-pass state machine
 
 **Subagent prompt files:**
-- `.claude/skills/auto-improve/prompts/planner.md`
-- `.claude/skills/auto-improve/prompts/proposer.md`
-- `.claude/skills/auto-improve/prompts/implementer.md`
-- `.claude/skills/auto-improve/prompts/critics/design-system.md`
-- `.claude/skills/auto-improve/prompts/critics/ux.md`
-- `.claude/skills/auto-improve/prompts/critics/brand.md`
-- `.claude/skills/auto-improve/prompts/critics/a11y-perf.md`
-- `.claude/skills/auto-improve/prompts/synthesizer.md`
+- `.claude/plugins/auto-improve/prompts/planner.md`
+- `.claude/plugins/auto-improve/prompts/proposer.md`
+- `.claude/plugins/auto-improve/prompts/implementer.md`
+- `.claude/plugins/auto-improve/prompts/critics/design-system.md`
+- `.claude/plugins/auto-improve/prompts/critics/ux.md`
+- `.claude/plugins/auto-improve/prompts/critics/brand.md`
+- `.claude/plugins/auto-improve/prompts/critics/a11y-perf.md`
+- `.claude/plugins/auto-improve/prompts/synthesizer.md`
 
 **Schemas (validation):**
-- `.claude/skills/auto-improve/schemas/config.schema.json`
-- `.claude/skills/auto-improve/schemas/backlog.schema.json`
-- `.claude/skills/auto-improve/schemas/critic-report.schema.json`
-- `.claude/skills/auto-improve/schemas/synthesizer-verdict.schema.json`
+- `.claude/plugins/auto-improve/schemas/config.schema.json`
+- `.claude/plugins/auto-improve/schemas/backlog.schema.json`
+- `.claude/plugins/auto-improve/schemas/critic-report.schema.json`
+- `.claude/plugins/auto-improve/schemas/synthesizer-verdict.schema.json`
 
 **Helper scripts:**
-- `.claude/skills/auto-improve/scripts/validate-config.mjs` — validates `auto-improve.config.yaml`
-- `.claude/skills/auto-improve/scripts/validate-backlog.mjs` — validates `backlog.yaml`
-- `.claude/skills/auto-improve/scripts/compute-run-id.sh` — computes next run-id
-- `.claude/skills/auto-improve/scripts/setup-run.sh` — cuts trunk branch, creates run directory
-- `.claude/skills/auto-improve/scripts/start-pass.sh` — creates pass branch
-- `.claude/skills/auto-improve/scripts/accept-pass.sh` — merges pass branch with --no-ff
-- `.claude/skills/auto-improve/scripts/reject-pass.sh` — renames branch into rejected/ namespace
-- `.claude/skills/auto-improve/scripts/append-log.mjs` — appends entry to run log
-- `.claude/skills/auto-improve/scripts/append-rejected.mjs` — appends to rejected_proposals
-- `.claude/skills/auto-improve/scripts/check-stop-conditions.mjs` — wall-clock + STOP file check
-- `.claude/skills/auto-improve/scripts/scope-advance-check.mjs` — scope-advance rule
-- `.claude/skills/auto-improve/scripts/finalize-run.mjs` — writes run summary
-- `.claude/skills/auto-improve/scripts/screenshot.mjs` — Playwright screenshot harness
+- `.claude/plugins/auto-improve/scripts/validate-config.mjs` — validates `auto-improve.config.yaml`
+- `.claude/plugins/auto-improve/scripts/validate-backlog.mjs` — validates `backlog.yaml`
+- `.claude/plugins/auto-improve/scripts/compute-run-id.sh` — computes next run-id
+- `.claude/plugins/auto-improve/scripts/setup-run.sh` — cuts trunk branch, creates run directory
+- `.claude/plugins/auto-improve/scripts/start-pass.sh` — creates pass branch
+- `.claude/plugins/auto-improve/scripts/accept-pass.sh` — merges pass branch with --no-ff
+- `.claude/plugins/auto-improve/scripts/reject-pass.sh` — renames branch into rejected/ namespace
+- `.claude/plugins/auto-improve/scripts/append-log.mjs` — appends entry to run log
+- `.claude/plugins/auto-improve/scripts/append-rejected.mjs` — appends to rejected_proposals
+- `.claude/plugins/auto-improve/scripts/check-stop-conditions.mjs` — wall-clock + STOP file check
+- `.claude/plugins/auto-improve/scripts/scope-advance-check.mjs` — scope-advance rule
+- `.claude/plugins/auto-improve/scripts/finalize-run.mjs` — writes run summary
+- `.claude/plugins/auto-improve/scripts/screenshot.mjs` — Playwright screenshot harness
 
 **Gate scripts (one per gate):**
-- `.claude/skills/auto-improve/scripts/gates/typescript.sh`
-- `.claude/skills/auto-improve/scripts/gates/lint.sh`
-- `.claude/skills/auto-improve/scripts/gates/test.sh`
-- `.claude/skills/auto-improve/scripts/gates/lighthouse.mjs`
-- `.claude/skills/auto-improve/scripts/gates/axe.mjs`
-- `.claude/skills/auto-improve/scripts/gates/visual-regression.mjs`
+- `.claude/plugins/auto-improve/scripts/gates/typescript.sh`
+- `.claude/plugins/auto-improve/scripts/gates/lint.sh`
+- `.claude/plugins/auto-improve/scripts/gates/test.sh`
+- `.claude/plugins/auto-improve/scripts/gates/lighthouse.mjs`
+- `.claude/plugins/auto-improve/scripts/gates/axe.mjs`
+- `.claude/plugins/auto-improve/scripts/gates/visual-regression.mjs`
 
 **Sample site (for development & validation):**
 - `examples/sample-site/` — minimal Next.js + Tailwind site (5 routes)
@@ -566,14 +566,14 @@ Expected: both paths print (meaning they ARE ignored).
 
 - [ ] **Step 4: Create samples/ directory with committed templates**
 
-Create `.claude/skills/auto-improve/samples/auto-improve.config.example.yaml` with the same content as Step 1 (so users have something to copy).
+Create `.claude/plugins/auto-improve/samples/auto-improve.config.example.yaml` with the same content as Step 1 (so users have something to copy).
 
-Create `.claude/skills/auto-improve/samples/backlog.example.yaml` with the same content as Step 2.
+Create `.claude/plugins/auto-improve/samples/backlog.example.yaml` with the same content as Step 2.
 
 - [ ] **Step 5: Commit the samples**
 
 ```bash
-git add .claude/skills/auto-improve/samples
+git add .claude/plugins/auto-improve/samples
 git commit -m "feat(auto-improve): add committed config and backlog templates"
 ```
 
@@ -586,11 +586,11 @@ Build the deterministic, non-agent infrastructure first. Schemas, branch helpers
 ### Task 7: Write the JSON schema for auto-improve.config.yaml
 
 **Files:**
-- Create: `.claude/skills/auto-improve/schemas/config.schema.json`
+- Create: `.claude/plugins/auto-improve/schemas/config.schema.json`
 
 - [ ] **Step 1: Write the schema**
 
-Create `.claude/skills/auto-improve/schemas/config.schema.json`:
+Create `.claude/plugins/auto-improve/schemas/config.schema.json`:
 
 ```json
 {
@@ -652,18 +652,18 @@ Create `.claude/skills/auto-improve/schemas/config.schema.json`:
 - [ ] **Step 2: Commit**
 
 ```bash
-git add .claude/skills/auto-improve/schemas/config.schema.json
+git add .claude/plugins/auto-improve/schemas/config.schema.json
 git commit -m "feat(auto-improve): add JSON schema for config.yaml"
 ```
 
 ### Task 8: Write the JSON schema for backlog.yaml
 
 **Files:**
-- Create: `.claude/skills/auto-improve/schemas/backlog.schema.json`
+- Create: `.claude/plugins/auto-improve/schemas/backlog.schema.json`
 
 - [ ] **Step 1: Write the schema**
 
-Create `.claude/skills/auto-improve/schemas/backlog.schema.json`:
+Create `.claude/plugins/auto-improve/schemas/backlog.schema.json`:
 
 ```json
 {
@@ -704,19 +704,19 @@ Create `.claude/skills/auto-improve/schemas/backlog.schema.json`:
 - [ ] **Step 2: Commit**
 
 ```bash
-git add .claude/skills/auto-improve/schemas/backlog.schema.json
+git add .claude/plugins/auto-improve/schemas/backlog.schema.json
 git commit -m "feat(auto-improve): add JSON schema for backlog.yaml"
 ```
 
 ### Task 9: Write validate-config.mjs
 
 **Files:**
-- Create: `.claude/skills/auto-improve/scripts/validate-config.mjs`
+- Create: `.claude/plugins/auto-improve/scripts/validate-config.mjs`
 - Test: `examples/sample-site/auto-improve.config.yaml` (manually run script against it)
 
 - [ ] **Step 1: Write the validator**
 
-Create `.claude/skills/auto-improve/scripts/validate-config.mjs`:
+Create `.claude/plugins/auto-improve/scripts/validate-config.mjs`:
 
 ```javascript
 #!/usr/bin/env node
@@ -757,11 +757,11 @@ process.exit(0);
 
 - [ ] **Step 2: Make it executable**
 
-Run: `chmod +x .claude/skills/auto-improve/scripts/validate-config.mjs`
+Run: `chmod +x .claude/plugins/auto-improve/scripts/validate-config.mjs`
 
 - [ ] **Step 3: Run it against the sample config**
 
-Run: `node .claude/skills/auto-improve/scripts/validate-config.mjs examples/sample-site/auto-improve.config.yaml`
+Run: `node .claude/plugins/auto-improve/scripts/validate-config.mjs examples/sample-site/auto-improve.config.yaml`
 Expected: prints `Config valid.`, exits 0.
 
 - [ ] **Step 4: Run it against an invalid config to confirm it rejects**
@@ -770,7 +770,7 @@ Run:
 
 ```bash
 echo "wall_clock_hours: 100" > /tmp/bad-config.yaml
-node .claude/skills/auto-improve/scripts/validate-config.mjs /tmp/bad-config.yaml
+node .claude/plugins/auto-improve/scripts/validate-config.mjs /tmp/bad-config.yaml
 echo "Exit: $?"
 rm /tmp/bad-config.yaml
 ```
@@ -780,18 +780,18 @@ Expected: prints validation errors (missing required fields, wall_clock_hours > 
 - [ ] **Step 5: Commit**
 
 ```bash
-git add .claude/skills/auto-improve/scripts/validate-config.mjs
+git add .claude/plugins/auto-improve/scripts/validate-config.mjs
 git commit -m "feat(auto-improve): add config validator script"
 ```
 
 ### Task 10: Write validate-backlog.mjs
 
 **Files:**
-- Create: `.claude/skills/auto-improve/scripts/validate-backlog.mjs`
+- Create: `.claude/plugins/auto-improve/scripts/validate-backlog.mjs`
 
 - [ ] **Step 1: Write the validator**
 
-Create `.claude/skills/auto-improve/scripts/validate-backlog.mjs`:
+Create `.claude/plugins/auto-improve/scripts/validate-backlog.mjs`:
 
 ```javascript
 #!/usr/bin/env node
@@ -837,28 +837,28 @@ process.exit(0);
 
 - [ ] **Step 2: Make it executable**
 
-Run: `chmod +x .claude/skills/auto-improve/scripts/validate-backlog.mjs`
+Run: `chmod +x .claude/plugins/auto-improve/scripts/validate-backlog.mjs`
 
 - [ ] **Step 3: Run it against the sample backlog**
 
-Run: `node .claude/skills/auto-improve/scripts/validate-backlog.mjs examples/sample-site/backlog.yaml`
+Run: `node .claude/plugins/auto-improve/scripts/validate-backlog.mjs examples/sample-site/backlog.yaml`
 Expected: prints `Backlog valid.`, exits 0.
 
 - [ ] **Step 4: Commit**
 
 ```bash
-git add .claude/skills/auto-improve/scripts/validate-backlog.mjs
+git add .claude/plugins/auto-improve/scripts/validate-backlog.mjs
 git commit -m "feat(auto-improve): add backlog validator script"
 ```
 
 ### Task 11: Write compute-run-id.sh
 
 **Files:**
-- Create: `.claude/skills/auto-improve/scripts/compute-run-id.sh`
+- Create: `.claude/plugins/auto-improve/scripts/compute-run-id.sh`
 
 - [ ] **Step 1: Write the script**
 
-Create `.claude/skills/auto-improve/scripts/compute-run-id.sh`:
+Create `.claude/plugins/auto-improve/scripts/compute-run-id.sh`:
 
 ```bash
 #!/usr/bin/env bash
@@ -894,11 +894,11 @@ printf "%s-%02d\n" "$today" "$next"
 
 - [ ] **Step 2: Make it executable**
 
-Run: `chmod +x .claude/skills/auto-improve/scripts/compute-run-id.sh`
+Run: `chmod +x .claude/plugins/auto-improve/scripts/compute-run-id.sh`
 
 - [ ] **Step 3: Run it from the project root and verify format**
 
-Run: `.claude/skills/auto-improve/scripts/compute-run-id.sh`
+Run: `.claude/plugins/auto-improve/scripts/compute-run-id.sh`
 Expected: prints something like `2026-05-15-01` (today's date, sequence 01 since no existing run branches).
 
 - [ ] **Step 4: Run it after creating a fake run branch and verify increment**
@@ -908,7 +908,7 @@ Run:
 ```bash
 TODAY=$(date +%Y-%m-%d)
 git branch "auto-improve/${TODAY}-01" main
-.claude/skills/auto-improve/scripts/compute-run-id.sh
+.claude/plugins/auto-improve/scripts/compute-run-id.sh
 ```
 
 Expected: prints `<today>-02`.
@@ -918,18 +918,18 @@ Cleanup: `git branch -D "auto-improve/${TODAY}-01"`
 - [ ] **Step 5: Commit**
 
 ```bash
-git add .claude/skills/auto-improve/scripts/compute-run-id.sh
+git add .claude/plugins/auto-improve/scripts/compute-run-id.sh
 git commit -m "feat(auto-improve): add run-id computation script"
 ```
 
 ### Task 12: Write setup-run.sh
 
 **Files:**
-- Create: `.claude/skills/auto-improve/scripts/setup-run.sh`
+- Create: `.claude/plugins/auto-improve/scripts/setup-run.sh`
 
 - [ ] **Step 1: Write the script**
 
-Create `.claude/skills/auto-improve/scripts/setup-run.sh`:
+Create `.claude/plugins/auto-improve/scripts/setup-run.sh`:
 
 ```bash
 #!/usr/bin/env bash
@@ -976,14 +976,14 @@ echo "$run_id"
 
 - [ ] **Step 2: Make it executable**
 
-Run: `chmod +x .claude/skills/auto-improve/scripts/setup-run.sh`
+Run: `chmod +x .claude/plugins/auto-improve/scripts/setup-run.sh`
 
 - [ ] **Step 3: Test it end-to-end**
 
 Run:
 
 ```bash
-.claude/skills/auto-improve/scripts/setup-run.sh
+.claude/plugins/auto-improve/scripts/setup-run.sh
 ```
 
 Expected: prints a run-id like `2026-05-15-01`. Verify:
@@ -1011,20 +1011,20 @@ rm -rf "docs/runs/${RUN_ID}"
 - [ ] **Step 5: Commit**
 
 ```bash
-git add .claude/skills/auto-improve/scripts/setup-run.sh
+git add .claude/plugins/auto-improve/scripts/setup-run.sh
 git commit -m "feat(auto-improve): add setup-run script"
 ```
 
 ### Task 13: Write start-pass.sh, accept-pass.sh, reject-pass.sh
 
 **Files:**
-- Create: `.claude/skills/auto-improve/scripts/start-pass.sh`
-- Create: `.claude/skills/auto-improve/scripts/accept-pass.sh`
-- Create: `.claude/skills/auto-improve/scripts/reject-pass.sh`
+- Create: `.claude/plugins/auto-improve/scripts/start-pass.sh`
+- Create: `.claude/plugins/auto-improve/scripts/accept-pass.sh`
+- Create: `.claude/plugins/auto-improve/scripts/reject-pass.sh`
 
 - [ ] **Step 1: Write start-pass.sh**
 
-Create `.claude/skills/auto-improve/scripts/start-pass.sh`:
+Create `.claude/plugins/auto-improve/scripts/start-pass.sh`:
 
 ```bash
 #!/usr/bin/env bash
@@ -1055,7 +1055,7 @@ echo "$branch"
 
 - [ ] **Step 2: Write accept-pass.sh**
 
-Create `.claude/skills/auto-improve/scripts/accept-pass.sh`:
+Create `.claude/plugins/auto-improve/scripts/accept-pass.sh`:
 
 ```bash
 #!/usr/bin/env bash
@@ -1085,7 +1085,7 @@ git rev-parse HEAD
 
 - [ ] **Step 3: Write reject-pass.sh**
 
-Create `.claude/skills/auto-improve/scripts/reject-pass.sh`:
+Create `.claude/plugins/auto-improve/scripts/reject-pass.sh`:
 
 ```bash
 #!/usr/bin/env bash
@@ -1116,7 +1116,7 @@ echo "$new_branch"
 
 - [ ] **Step 4: Make all three executable**
 
-Run: `chmod +x .claude/skills/auto-improve/scripts/{start-pass.sh,accept-pass.sh,reject-pass.sh}`
+Run: `chmod +x .claude/plugins/auto-improve/scripts/{start-pass.sh,accept-pass.sh,reject-pass.sh}`
 
 - [ ] **Step 5: Test the full lifecycle**
 
@@ -1124,11 +1124,11 @@ Run:
 
 ```bash
 # Set up a run
-RUN_ID=$(.claude/skills/auto-improve/scripts/setup-run.sh)
+RUN_ID=$(.claude/plugins/auto-improve/scripts/setup-run.sh)
 echo "run: $RUN_ID"
 
 # Start a pass
-BRANCH=$(.claude/skills/auto-improve/scripts/start-pass.sh "$RUN_ID" 1 hero test-proposal)
+BRANCH=$(.claude/plugins/auto-improve/scripts/start-pass.sh "$RUN_ID" 1 hero test-proposal)
 echo "pass branch: $BRANCH"
 
 # Make a trivial commit on the pass branch
@@ -1137,7 +1137,7 @@ git add examples/sample-site/src/components/Hero.tsx
 git commit -m "test pass commit"
 
 # Accept the pass
-SHA=$(.claude/skills/auto-improve/scripts/accept-pass.sh "$RUN_ID" "$BRANCH" 1 hero test-proposal)
+SHA=$(.claude/plugins/auto-improve/scripts/accept-pass.sh "$RUN_ID" "$BRANCH" 1 hero test-proposal)
 echo "merge: $SHA"
 
 # Verify trunk has a merge commit
@@ -1157,11 +1157,11 @@ Expected: each step succeeds. The final `git log` output shows the merge commit 
 Run:
 
 ```bash
-RUN_ID=$(.claude/skills/auto-improve/scripts/setup-run.sh)
-BRANCH=$(.claude/skills/auto-improve/scripts/start-pass.sh "$RUN_ID" 2 hero bad-proposal)
+RUN_ID=$(.claude/plugins/auto-improve/scripts/setup-run.sh)
+BRANCH=$(.claude/plugins/auto-improve/scripts/start-pass.sh "$RUN_ID" 2 hero bad-proposal)
 echo "// rejected work" >> examples/sample-site/src/components/Hero.tsx
 git add . && git commit -m "rejected work"
-NEW_BRANCH=$(.claude/skills/auto-improve/scripts/reject-pass.sh "$RUN_ID" "$BRANCH" 2 hero bad-proposal)
+NEW_BRANCH=$(.claude/plugins/auto-improve/scripts/reject-pass.sh "$RUN_ID" "$BRANCH" 2 hero bad-proposal)
 echo "renamed to: $NEW_BRANCH"
 
 # Verify
@@ -1179,18 +1179,18 @@ Expected: `git branch --list` shows the rejected branch under the rejected/ name
 - [ ] **Step 7: Commit**
 
 ```bash
-git add .claude/skills/auto-improve/scripts/{start-pass.sh,accept-pass.sh,reject-pass.sh}
+git add .claude/plugins/auto-improve/scripts/{start-pass.sh,accept-pass.sh,reject-pass.sh}
 git commit -m "feat(auto-improve): add pass lifecycle scripts (start, accept, reject)"
 ```
 
 ### Task 14: Write append-log.mjs
 
 **Files:**
-- Create: `.claude/skills/auto-improve/scripts/append-log.mjs`
+- Create: `.claude/plugins/auto-improve/scripts/append-log.mjs`
 
 - [ ] **Step 1: Write the script**
 
-Create `.claude/skills/auto-improve/scripts/append-log.mjs`:
+Create `.claude/plugins/auto-improve/scripts/append-log.mjs`:
 
 ```javascript
 #!/usr/bin/env node
@@ -1275,14 +1275,14 @@ console.log(`Appended pass ${passNum} to ${logPath}`);
 
 - [ ] **Step 2: Make executable**
 
-Run: `chmod +x .claude/skills/auto-improve/scripts/append-log.mjs`
+Run: `chmod +x .claude/plugins/auto-improve/scripts/append-log.mjs`
 
 - [ ] **Step 3: Test it end-to-end**
 
 Run:
 
 ```bash
-RUN_ID=$(.claude/skills/auto-improve/scripts/setup-run.sh)
+RUN_ID=$(.claude/plugins/auto-improve/scripts/setup-run.sh)
 
 cat > /tmp/entry.json <<EOF
 {
@@ -1302,7 +1302,7 @@ cat > /tmp/entry.json <<EOF
 }
 EOF
 
-node .claude/skills/auto-improve/scripts/append-log.mjs "$RUN_ID" /tmp/entry.json
+node .claude/plugins/auto-improve/scripts/append-log.mjs "$RUN_ID" /tmp/entry.json
 cat "docs/runs/${RUN_ID}/log.md"
 
 # Cleanup
@@ -1316,18 +1316,18 @@ Expected: log.md ends with a properly formatted pass entry.
 - [ ] **Step 4: Commit**
 
 ```bash
-git add .claude/skills/auto-improve/scripts/append-log.mjs
+git add .claude/plugins/auto-improve/scripts/append-log.mjs
 git commit -m "feat(auto-improve): add run-log appender script"
 ```
 
 ### Task 15: Write append-rejected.mjs
 
 **Files:**
-- Create: `.claude/skills/auto-improve/scripts/append-rejected.mjs`
+- Create: `.claude/plugins/auto-improve/scripts/append-rejected.mjs`
 
 - [ ] **Step 1: Write the script**
 
-Create `.claude/skills/auto-improve/scripts/append-rejected.mjs`:
+Create `.claude/plugins/auto-improve/scripts/append-rejected.mjs`:
 
 ```javascript
 #!/usr/bin/env node
@@ -1364,16 +1364,16 @@ console.log(`Appended rejection to ${path}`);
 
 - [ ] **Step 2: Make executable**
 
-Run: `chmod +x .claude/skills/auto-improve/scripts/append-rejected.mjs`
+Run: `chmod +x .claude/plugins/auto-improve/scripts/append-rejected.mjs`
 
 - [ ] **Step 3: Test**
 
 Run:
 
 ```bash
-RUN_ID=$(.claude/skills/auto-improve/scripts/setup-run.sh)
+RUN_ID=$(.claude/plugins/auto-improve/scripts/setup-run.sh)
 
-node .claude/skills/auto-improve/scripts/append-rejected.mjs \
+node .claude/plugins/auto-improve/scripts/append-rejected.mjs \
   "$RUN_ID" hero 7 \
   "auto-improve/${RUN_ID}/rejected/07-hero-bloom" \
   "Add CTA hover bloom" \
@@ -1392,18 +1392,18 @@ Expected: hero.yaml contains a list with one entry, properly YAML-formatted.
 - [ ] **Step 4: Commit**
 
 ```bash
-git add .claude/skills/auto-improve/scripts/append-rejected.mjs
+git add .claude/plugins/auto-improve/scripts/append-rejected.mjs
 git commit -m "feat(auto-improve): add rejected-proposals appender script"
 ```
 
 ### Task 16: Write check-stop-conditions.mjs
 
 **Files:**
-- Create: `.claude/skills/auto-improve/scripts/check-stop-conditions.mjs`
+- Create: `.claude/plugins/auto-improve/scripts/check-stop-conditions.mjs`
 
 - [ ] **Step 1: Write the script**
 
-Create `.claude/skills/auto-improve/scripts/check-stop-conditions.mjs`:
+Create `.claude/plugins/auto-improve/scripts/check-stop-conditions.mjs`:
 
 ```javascript
 #!/usr/bin/env node
@@ -1444,7 +1444,7 @@ process.exit(0);
 
 - [ ] **Step 2: Make executable**
 
-Run: `chmod +x .claude/skills/auto-improve/scripts/check-stop-conditions.mjs`
+Run: `chmod +x .claude/plugins/auto-improve/scripts/check-stop-conditions.mjs`
 
 - [ ] **Step 3: Test all three stop conditions**
 
@@ -1452,40 +1452,40 @@ Run:
 
 ```bash
 # Wall-clock not exceeded, no STOP file, backlog non-empty -> CONTINUE
-node .claude/skills/auto-improve/scripts/check-stop-conditions.mjs "$(date -u +%Y-%m-%dT%H:%M:%SZ)" 10 false
+node .claude/plugins/auto-improve/scripts/check-stop-conditions.mjs "$(date -u +%Y-%m-%dT%H:%M:%SZ)" 10 false
 # expect: CONTINUE, exit 0
 
 # Wall-clock exceeded
-node .claude/skills/auto-improve/scripts/check-stop-conditions.mjs "2020-01-01T00:00:00Z" 1 false
+node .claude/plugins/auto-improve/scripts/check-stop-conditions.mjs "2020-01-01T00:00:00Z" 1 false
 # expect: STOP: wall_clock, exit 1
 
 # STOP file
 touch STOP
-node .claude/skills/auto-improve/scripts/check-stop-conditions.mjs "$(date -u +%Y-%m-%dT%H:%M:%SZ)" 10 false
+node .claude/plugins/auto-improve/scripts/check-stop-conditions.mjs "$(date -u +%Y-%m-%dT%H:%M:%SZ)" 10 false
 echo "exit=$?"
 rm STOP
 # expect: STOP: STOP file present, exit 1
 
 # Backlog empty
-node .claude/skills/auto-improve/scripts/check-stop-conditions.mjs "$(date -u +%Y-%m-%dT%H:%M:%SZ)" 10 true
+node .claude/plugins/auto-improve/scripts/check-stop-conditions.mjs "$(date -u +%Y-%m-%dT%H:%M:%SZ)" 10 true
 # expect: STOP: backlog empty, exit 1
 ```
 
 - [ ] **Step 4: Commit**
 
 ```bash
-git add .claude/skills/auto-improve/scripts/check-stop-conditions.mjs
+git add .claude/plugins/auto-improve/scripts/check-stop-conditions.mjs
 git commit -m "feat(auto-improve): add stop-condition checker script"
 ```
 
 ### Task 17: Write scope-advance-check.mjs
 
 **Files:**
-- Create: `.claude/skills/auto-improve/scripts/scope-advance-check.mjs`
+- Create: `.claude/plugins/auto-improve/scripts/scope-advance-check.mjs`
 
 - [ ] **Step 1: Write the script**
 
-Create `.claude/skills/auto-improve/scripts/scope-advance-check.mjs`:
+Create `.claude/plugins/auto-improve/scripts/scope-advance-check.mjs`:
 
 ```javascript
 #!/usr/bin/env node
@@ -1521,7 +1521,7 @@ process.exit(0);
 
 - [ ] **Step 2: Make executable**
 
-Run: `chmod +x .claude/skills/auto-improve/scripts/scope-advance-check.mjs`
+Run: `chmod +x .claude/plugins/auto-improve/scripts/scope-advance-check.mjs`
 
 - [ ] **Step 3: Test**
 
@@ -1529,37 +1529,37 @@ Run:
 
 ```bash
 # Insufficient history
-node .claude/skills/auto-improve/scripts/scope-advance-check.mjs 0.5 2 "8.0"
+node .claude/plugins/auto-improve/scripts/scope-advance-check.mjs 0.5 2 "8.0"
 # expect: STAY
 
 # Sufficient improvement
-node .claude/skills/auto-improve/scripts/scope-advance-check.mjs 0.5 2 "8.0,8.7"
+node .claude/plugins/auto-improve/scripts/scope-advance-check.mjs 0.5 2 "8.0,8.7"
 # expect: STAY (delta=0.70 >= threshold=0.5)
 
 # Insufficient improvement
-node .claude/skills/auto-improve/scripts/scope-advance-check.mjs 0.5 2 "8.0,8.2"
+node .claude/plugins/auto-improve/scripts/scope-advance-check.mjs 0.5 2 "8.0,8.2"
 # expect: ADVANCE (delta=0.20 < threshold=0.5)
 
 # Three scores; window=2 takes only the last two
-node .claude/skills/auto-improve/scripts/scope-advance-check.mjs 0.5 2 "8.0,8.7,8.8"
+node .claude/plugins/auto-improve/scripts/scope-advance-check.mjs 0.5 2 "8.0,8.7,8.8"
 # expect: ADVANCE (delta=0.10 < threshold=0.5)
 ```
 
 - [ ] **Step 4: Commit**
 
 ```bash
-git add .claude/skills/auto-improve/scripts/scope-advance-check.mjs
+git add .claude/plugins/auto-improve/scripts/scope-advance-check.mjs
 git commit -m "feat(auto-improve): add scope-advance check script"
 ```
 
 ### Task 18: Write finalize-run.mjs
 
 **Files:**
-- Create: `.claude/skills/auto-improve/scripts/finalize-run.mjs`
+- Create: `.claude/plugins/auto-improve/scripts/finalize-run.mjs`
 
 - [ ] **Step 1: Write the script**
 
-Create `.claude/skills/auto-improve/scripts/finalize-run.mjs`:
+Create `.claude/plugins/auto-improve/scripts/finalize-run.mjs`:
 
 ```javascript
 #!/usr/bin/env node
@@ -1601,14 +1601,14 @@ console.log(`Finalized log at ${logPath}`);
 
 - [ ] **Step 2: Make executable**
 
-Run: `chmod +x .claude/skills/auto-improve/scripts/finalize-run.mjs`
+Run: `chmod +x .claude/plugins/auto-improve/scripts/finalize-run.mjs`
 
 - [ ] **Step 3: Test**
 
 Run:
 
 ```bash
-RUN_ID=$(.claude/skills/auto-improve/scripts/setup-run.sh)
+RUN_ID=$(.claude/plugins/auto-improve/scripts/setup-run.sh)
 
 cat > /tmp/summary.json <<EOF
 {
@@ -1620,7 +1620,7 @@ cat > /tmp/summary.json <<EOF
 }
 EOF
 
-node .claude/skills/auto-improve/scripts/finalize-run.mjs "$RUN_ID" wall_clock_hours /tmp/summary.json
+node .claude/plugins/auto-improve/scripts/finalize-run.mjs "$RUN_ID" wall_clock_hours /tmp/summary.json
 cat "docs/runs/${RUN_ID}/log.md"
 
 # Cleanup
@@ -1634,7 +1634,7 @@ Expected: log.md ends with a Run summary block.
 - [ ] **Step 4: Commit**
 
 ```bash
-git add .claude/skills/auto-improve/scripts/finalize-run.mjs
+git add .claude/plugins/auto-improve/scripts/finalize-run.mjs
 git commit -m "feat(auto-improve): add run-summary finalizer script"
 ```
 
@@ -1647,11 +1647,11 @@ Each gate is a small executable that exits 0 on pass, non-zero on fail, and writ
 ### Task 19: Write the screenshot harness (Playwright)
 
 **Files:**
-- Create: `.claude/skills/auto-improve/scripts/screenshot.mjs`
+- Create: `.claude/plugins/auto-improve/scripts/screenshot.mjs`
 
 - [ ] **Step 1: Write the script**
 
-Create `.claude/skills/auto-improve/scripts/screenshot.mjs`:
+Create `.claude/plugins/auto-improve/scripts/screenshot.mjs`:
 
 ```javascript
 #!/usr/bin/env node
@@ -1722,14 +1722,14 @@ try {
 
 - [ ] **Step 2: Make executable**
 
-Run: `chmod +x .claude/skills/auto-improve/scripts/screenshot.mjs`
+Run: `chmod +x .claude/plugins/auto-improve/scripts/screenshot.mjs`
 
 - [ ] **Step 3: Test against the sample site**
 
 Run:
 
 ```bash
-node .claude/skills/auto-improve/scripts/screenshot.mjs \
+node .claude/plugins/auto-improve/scripts/screenshot.mjs \
   "npm --prefix examples/sample-site run dev" \
   "http://localhost:3000" \
   "/,/pricing,/about" \
@@ -1746,18 +1746,18 @@ Expected: PNG files exist for both viewports across all three routes.
 - [ ] **Step 4: Commit**
 
 ```bash
-git add .claude/skills/auto-improve/scripts/screenshot.mjs
+git add .claude/plugins/auto-improve/scripts/screenshot.mjs
 git commit -m "feat(auto-improve): add Playwright screenshot harness"
 ```
 
 ### Task 20: Write the typescript gate
 
 **Files:**
-- Create: `.claude/skills/auto-improve/scripts/gates/typescript.sh`
+- Create: `.claude/plugins/auto-improve/scripts/gates/typescript.sh`
 
 - [ ] **Step 1: Write the script**
 
-Create `.claude/skills/auto-improve/scripts/gates/typescript.sh`:
+Create `.claude/plugins/auto-improve/scripts/gates/typescript.sh`:
 
 ```bash
 #!/usr/bin/env bash
@@ -1803,7 +1803,7 @@ fi
 
 - [ ] **Step 2: Make executable**
 
-Run: `chmod +x .claude/skills/auto-improve/scripts/gates/typescript.sh`
+Run: `chmod +x .claude/plugins/auto-improve/scripts/gates/typescript.sh`
 
 - [ ] **Step 3: Verify jq is available**
 
@@ -1816,7 +1816,7 @@ Run:
 
 ```bash
 cp examples/sample-site/auto-improve.config.yaml .
-.claude/skills/auto-improve/scripts/gates/typescript.sh /tmp/ts-report.json
+.claude/plugins/auto-improve/scripts/gates/typescript.sh /tmp/ts-report.json
 cat /tmp/ts-report.json
 rm auto-improve.config.yaml /tmp/ts-report.json
 ```
@@ -1826,18 +1826,18 @@ Expected: prints `PASS: typescript`, JSON report shows status pass.
 - [ ] **Step 5: Commit**
 
 ```bash
-git add .claude/skills/auto-improve/scripts/gates/typescript.sh
+git add .claude/plugins/auto-improve/scripts/gates/typescript.sh
 git commit -m "feat(auto-improve): add TypeScript gate"
 ```
 
 ### Task 21: Write the lint gate
 
 **Files:**
-- Create: `.claude/skills/auto-improve/scripts/gates/lint.sh`
+- Create: `.claude/plugins/auto-improve/scripts/gates/lint.sh`
 
 - [ ] **Step 1: Write the script**
 
-Create `.claude/skills/auto-improve/scripts/gates/lint.sh`:
+Create `.claude/plugins/auto-improve/scripts/gates/lint.sh`:
 
 ```bash
 #!/usr/bin/env bash
@@ -1879,7 +1879,7 @@ fi
 
 - [ ] **Step 2: Make executable**
 
-Run: `chmod +x .claude/skills/auto-improve/scripts/gates/lint.sh`
+Run: `chmod +x .claude/plugins/auto-improve/scripts/gates/lint.sh`
 
 - [ ] **Step 3: Test**
 
@@ -1887,7 +1887,7 @@ Run:
 
 ```bash
 cp examples/sample-site/auto-improve.config.yaml .
-.claude/skills/auto-improve/scripts/gates/lint.sh /tmp/lint-report.json
+.claude/plugins/auto-improve/scripts/gates/lint.sh /tmp/lint-report.json
 cat /tmp/lint-report.json
 rm auto-improve.config.yaml /tmp/lint-report.json
 ```
@@ -1897,18 +1897,18 @@ Expected: PASS.
 - [ ] **Step 4: Commit**
 
 ```bash
-git add .claude/skills/auto-improve/scripts/gates/lint.sh
+git add .claude/plugins/auto-improve/scripts/gates/lint.sh
 git commit -m "feat(auto-improve): add lint gate"
 ```
 
 ### Task 22: Write the test gate
 
 **Files:**
-- Create: `.claude/skills/auto-improve/scripts/gates/test.sh`
+- Create: `.claude/plugins/auto-improve/scripts/gates/test.sh`
 
 - [ ] **Step 1: Write the script**
 
-Create `.claude/skills/auto-improve/scripts/gates/test.sh`:
+Create `.claude/plugins/auto-improve/scripts/gates/test.sh`:
 
 ```bash
 #!/usr/bin/env bash
@@ -1951,9 +1951,9 @@ fi
 - [ ] **Step 2: Make executable and test**
 
 ```bash
-chmod +x .claude/skills/auto-improve/scripts/gates/test.sh
+chmod +x .claude/plugins/auto-improve/scripts/gates/test.sh
 cp examples/sample-site/auto-improve.config.yaml .
-.claude/skills/auto-improve/scripts/gates/test.sh /tmp/test-report.json
+.claude/plugins/auto-improve/scripts/gates/test.sh /tmp/test-report.json
 cat /tmp/test-report.json
 rm auto-improve.config.yaml /tmp/test-report.json
 ```
@@ -1963,18 +1963,18 @@ Expected: PASS (sample test_command is `echo 'no tests yet' && exit 0`).
 - [ ] **Step 3: Commit**
 
 ```bash
-git add .claude/skills/auto-improve/scripts/gates/test.sh
+git add .claude/plugins/auto-improve/scripts/gates/test.sh
 git commit -m "feat(auto-improve): add test gate"
 ```
 
 ### Task 23: Write the lighthouse gate
 
 **Files:**
-- Create: `.claude/skills/auto-improve/scripts/gates/lighthouse.mjs`
+- Create: `.claude/plugins/auto-improve/scripts/gates/lighthouse.mjs`
 
 - [ ] **Step 1: Write the script**
 
-Create `.claude/skills/auto-improve/scripts/gates/lighthouse.mjs`:
+Create `.claude/plugins/auto-improve/scripts/gates/lighthouse.mjs`:
 
 ```javascript
 #!/usr/bin/env node
@@ -2047,7 +2047,7 @@ try {
 
 - [ ] **Step 2: Make executable**
 
-Run: `chmod +x .claude/skills/auto-improve/scripts/gates/lighthouse.mjs`
+Run: `chmod +x .claude/plugins/auto-improve/scripts/gates/lighthouse.mjs`
 
 - [ ] **Step 3: Test**
 
@@ -2056,7 +2056,7 @@ Run:
 ```bash
 cp examples/sample-site/auto-improve.config.yaml .
 cp examples/sample-site/backlog.yaml .
-node .claude/skills/auto-improve/scripts/gates/lighthouse.mjs /tmp/lh-report.json
+node .claude/plugins/auto-improve/scripts/gates/lighthouse.mjs /tmp/lh-report.json
 cat /tmp/lh-report.json
 rm auto-improve.config.yaml backlog.yaml /tmp/lh-report.json
 ```
@@ -2066,18 +2066,18 @@ Expected: prints PASS or FAIL with per-route scores. (Sample site should pass.)
 - [ ] **Step 4: Commit**
 
 ```bash
-git add .claude/skills/auto-improve/scripts/gates/lighthouse.mjs
+git add .claude/plugins/auto-improve/scripts/gates/lighthouse.mjs
 git commit -m "feat(auto-improve): add Lighthouse gate"
 ```
 
 ### Task 24: Write the axe gate
 
 **Files:**
-- Create: `.claude/skills/auto-improve/scripts/gates/axe.mjs`
+- Create: `.claude/plugins/auto-improve/scripts/gates/axe.mjs`
 
 - [ ] **Step 1: Write the script**
 
-Create `.claude/skills/auto-improve/scripts/gates/axe.mjs`:
+Create `.claude/plugins/auto-improve/scripts/gates/axe.mjs`:
 
 ```javascript
 #!/usr/bin/env node
@@ -2159,10 +2159,10 @@ try {
 - [ ] **Step 2: Make executable and test**
 
 ```bash
-chmod +x .claude/skills/auto-improve/scripts/gates/axe.mjs
+chmod +x .claude/plugins/auto-improve/scripts/gates/axe.mjs
 cp examples/sample-site/auto-improve.config.yaml .
 cp examples/sample-site/backlog.yaml .
-node .claude/skills/auto-improve/scripts/gates/axe.mjs /tmp/axe-report.json
+node .claude/plugins/auto-improve/scripts/gates/axe.mjs /tmp/axe-report.json
 cat /tmp/axe-report.json
 rm auto-improve.config.yaml backlog.yaml /tmp/axe-report.json
 ```
@@ -2172,18 +2172,18 @@ Expected: PASS (sample site should have no critical/serious axe violations).
 - [ ] **Step 3: Commit**
 
 ```bash
-git add .claude/skills/auto-improve/scripts/gates/axe.mjs
+git add .claude/plugins/auto-improve/scripts/gates/axe.mjs
 git commit -m "feat(auto-improve): add axe gate"
 ```
 
 ### Task 25: Write the visual-regression gate
 
 **Files:**
-- Create: `.claude/skills/auto-improve/scripts/gates/visual-regression.mjs`
+- Create: `.claude/plugins/auto-improve/scripts/gates/visual-regression.mjs`
 
 - [ ] **Step 1: Write the script**
 
-Create `.claude/skills/auto-improve/scripts/gates/visual-regression.mjs`:
+Create `.claude/plugins/auto-improve/scripts/gates/visual-regression.mjs`:
 
 ```javascript
 #!/usr/bin/env node
@@ -2259,27 +2259,27 @@ process.exit(allPass ? 0 : 1);
 - [ ] **Step 2: Make executable and test**
 
 ```bash
-chmod +x .claude/skills/auto-improve/scripts/gates/visual-regression.mjs
+chmod +x .claude/plugins/auto-improve/scripts/gates/visual-regression.mjs
 
 # First run: no baseline, should pass
-node .claude/skills/auto-improve/scripts/screenshot.mjs \
+node .claude/plugins/auto-improve/scripts/screenshot.mjs \
   "npm --prefix examples/sample-site run dev" \
   "http://localhost:3000" \
   "/,/pricing" \
   /tmp/baseline
 
-node .claude/skills/auto-improve/scripts/gates/visual-regression.mjs \
+node .claude/plugins/auto-improve/scripts/gates/visual-regression.mjs \
   /tmp/nonexistent /tmp/baseline /tmp/vr-1.json
 cat /tmp/vr-1.json
 
 # Second run with same screenshots, should pass with ~0% diff
-node .claude/skills/auto-improve/scripts/screenshot.mjs \
+node .claude/plugins/auto-improve/scripts/screenshot.mjs \
   "npm --prefix examples/sample-site run dev" \
   "http://localhost:3000" \
   "/,/pricing" \
   /tmp/current
 
-node .claude/skills/auto-improve/scripts/gates/visual-regression.mjs \
+node .claude/plugins/auto-improve/scripts/gates/visual-regression.mjs \
   /tmp/baseline /tmp/current /tmp/vr-2.json
 cat /tmp/vr-2.json
 
@@ -2291,7 +2291,7 @@ Expected: first call passes with "no baseline" note. Second call passes with rat
 - [ ] **Step 3: Commit**
 
 ```bash
-git add .claude/skills/auto-improve/scripts/gates/visual-regression.mjs
+git add .claude/plugins/auto-improve/scripts/gates/visual-regression.mjs
 git commit -m "feat(auto-improve): add visual-regression gate"
 ```
 
@@ -2304,11 +2304,11 @@ Build the once-per-run setup skill and the design-contract writer. This phase pr
 ### Task 26: Write the setting-up-a-run SKILL.md
 
 **Files:**
-- Create: `.claude/skills/auto-improve/setting-up-a-run/SKILL.md`
+- Create: `.claude/plugins/auto-improve/skills/setting-up-a-run/SKILL.md`
 
 - [ ] **Step 1: Write the skill**
 
-Create `.claude/skills/auto-improve/setting-up-a-run/SKILL.md`:
+Create `.claude/plugins/auto-improve/skills/setting-up-a-run/SKILL.md`:
 
 ```markdown
 ---
@@ -2335,7 +2335,7 @@ Working tree must be clean. `main` branch must exist.
 1. **Validate config.** Run:
 
    ```bash
-   node .claude/skills/auto-improve/scripts/validate-config.mjs auto-improve.config.yaml
+   node .claude/plugins/auto-improve/scripts/validate-config.mjs auto-improve.config.yaml
    ```
 
    If exit code != 0, fail with the validator's error output. Do not proceed.
@@ -2343,7 +2343,7 @@ Working tree must be clean. `main` branch must exist.
 2. **Validate backlog.** Run:
 
    ```bash
-   node .claude/skills/auto-improve/scripts/validate-backlog.mjs backlog.yaml
+   node .claude/plugins/auto-improve/scripts/validate-backlog.mjs backlog.yaml
    ```
 
    If exit code != 0, fail.
@@ -2359,7 +2359,7 @@ Working tree must be clean. `main` branch must exist.
 4. **Set up the run.** Run:
 
    ```bash
-   .claude/skills/auto-improve/scripts/setup-run.sh
+   .claude/plugins/auto-improve/scripts/setup-run.sh
    ```
 
    Capture stdout — that's the run-id (e.g., `2026-05-15-01`).
@@ -2385,18 +2385,18 @@ On success, return:
 - [ ] **Step 2: Commit**
 
 ```bash
-git add .claude/skills/auto-improve/setting-up-a-run
+git add .claude/plugins/auto-improve/setting-up-a-run
 git commit -m "feat(auto-improve): add setting-up-a-run skill"
 ```
 
 ### Task 27: Write the writing-design-contract SKILL.md
 
 **Files:**
-- Create: `.claude/skills/auto-improve/writing-design-contract/SKILL.md`
+- Create: `.claude/plugins/auto-improve/skills/writing-design-contract/SKILL.md`
 
 - [ ] **Step 1: Write the skill**
 
-Create `.claude/skills/auto-improve/writing-design-contract/SKILL.md`:
+Create `.claude/plugins/auto-improve/skills/writing-design-contract/SKILL.md`:
 
 ```markdown
 ---
@@ -2467,7 +2467,7 @@ The DESIGN_CONTRACT must be:
 - [ ] **Step 2: Commit**
 
 ```bash
-git add .claude/skills/auto-improve/writing-design-contract
+git add .claude/plugins/auto-improve/writing-design-contract
 git commit -m "feat(auto-improve): add writing-design-contract skill"
 ```
 
@@ -2489,8 +2489,8 @@ cp -r examples/sample-site/handoff-bundle .
 - [ ] **Step 2: Run the validation pipeline manually (simulating the skill)**
 
 ```bash
-node .claude/skills/auto-improve/scripts/validate-config.mjs auto-improve.config.yaml
-node .claude/skills/auto-improve/scripts/validate-backlog.mjs backlog.yaml
+node .claude/plugins/auto-improve/scripts/validate-config.mjs auto-improve.config.yaml
+node .claude/plugins/auto-improve/scripts/validate-backlog.mjs backlog.yaml
 test -f BRAND.md && test -d handoff-bundle/ && echo "inputs ok"
 ```
 
@@ -2499,7 +2499,7 @@ Expected: all three pass, prints "inputs ok".
 - [ ] **Step 3: Run setup-run.sh**
 
 ```bash
-RUN_ID=$(.claude/skills/auto-improve/scripts/setup-run.sh)
+RUN_ID=$(.claude/plugins/auto-improve/scripts/setup-run.sh)
 echo "run: $RUN_ID"
 git branch --show-current
 ls "docs/runs/${RUN_ID}/"
@@ -2542,11 +2542,11 @@ Author each subagent's prompt file. These are dispatched by name from the execut
 ### Task 29: Write planner.md
 
 **Files:**
-- Create: `.claude/skills/auto-improve/prompts/planner.md`
+- Create: `.claude/plugins/auto-improve/prompts/planner.md`
 
 - [ ] **Step 1: Write the prompt**
 
-Create `.claude/skills/auto-improve/prompts/planner.md`:
+Create `.claude/plugins/auto-improve/prompts/planner.md`:
 
 ```markdown
 # Planner Subagent
@@ -2588,18 +2588,18 @@ rationale: |
 - [ ] **Step 2: Commit**
 
 ```bash
-git add .claude/skills/auto-improve/prompts/planner.md
+git add .claude/plugins/auto-improve/prompts/planner.md
 git commit -m "feat(auto-improve): add planner subagent prompt"
 ```
 
 ### Task 30: Write proposer.md
 
 **Files:**
-- Create: `.claude/skills/auto-improve/prompts/proposer.md`
+- Create: `.claude/plugins/auto-improve/prompts/proposer.md`
 
 - [ ] **Step 1: Write the prompt**
 
-Create `.claude/skills/auto-improve/prompts/proposer.md`:
+Create `.claude/plugins/auto-improve/prompts/proposer.md`:
 
 ```markdown
 # Proposer Subagent
@@ -2655,18 +2655,18 @@ rationale: |
 - [ ] **Step 2: Commit**
 
 ```bash
-git add .claude/skills/auto-improve/prompts/proposer.md
+git add .claude/plugins/auto-improve/prompts/proposer.md
 git commit -m "feat(auto-improve): add proposer subagent prompt"
 ```
 
 ### Task 31: Write implementer.md
 
 **Files:**
-- Create: `.claude/skills/auto-improve/prompts/implementer.md`
+- Create: `.claude/plugins/auto-improve/prompts/implementer.md`
 
 - [ ] **Step 1: Write the prompt**
 
-Create `.claude/skills/auto-improve/prompts/implementer.md`:
+Create `.claude/plugins/auto-improve/prompts/implementer.md`:
 
 ```markdown
 # Implementer Subagent
@@ -2724,18 +2724,18 @@ blocker:                        # only if BLOCKED
 - [ ] **Step 2: Commit**
 
 ```bash
-git add .claude/skills/auto-improve/prompts/implementer.md
+git add .claude/plugins/auto-improve/prompts/implementer.md
 git commit -m "feat(auto-improve): add implementer subagent prompt"
 ```
 
 ### Task 32: Write the design-system critic prompt
 
 **Files:**
-- Create: `.claude/skills/auto-improve/prompts/critics/design-system.md`
+- Create: `.claude/plugins/auto-improve/prompts/critics/design-system.md`
 
 - [ ] **Step 1: Write the prompt**
 
-Create `.claude/skills/auto-improve/prompts/critics/design-system.md`:
+Create `.claude/plugins/auto-improve/prompts/critics/design-system.md`:
 
 ```markdown
 # Design-System Critic
@@ -2788,18 +2788,18 @@ prose: |
 - [ ] **Step 2: Commit**
 
 ```bash
-git add .claude/skills/auto-improve/prompts/critics/design-system.md
+git add .claude/plugins/auto-improve/prompts/critics/design-system.md
 git commit -m "feat(auto-improve): add design-system critic prompt"
 ```
 
 ### Task 33: Write the UX critic prompt
 
 **Files:**
-- Create: `.claude/skills/auto-improve/prompts/critics/ux.md`
+- Create: `.claude/plugins/auto-improve/prompts/critics/ux.md`
 
 - [ ] **Step 1: Write the prompt**
 
-Create `.claude/skills/auto-improve/prompts/critics/ux.md`:
+Create `.claude/plugins/auto-improve/prompts/critics/ux.md`:
 
 ```markdown
 # UX Critic
@@ -2851,18 +2851,18 @@ prose: |
 - [ ] **Step 2: Commit**
 
 ```bash
-git add .claude/skills/auto-improve/prompts/critics/ux.md
+git add .claude/plugins/auto-improve/prompts/critics/ux.md
 git commit -m "feat(auto-improve): add UX critic prompt"
 ```
 
 ### Task 34: Write the brand critic prompt
 
 **Files:**
-- Create: `.claude/skills/auto-improve/prompts/critics/brand.md`
+- Create: `.claude/plugins/auto-improve/prompts/critics/brand.md`
 
 - [ ] **Step 1: Write the prompt**
 
-Create `.claude/skills/auto-improve/prompts/critics/brand.md`:
+Create `.claude/plugins/auto-improve/prompts/critics/brand.md`:
 
 ```markdown
 # Brand Critic
@@ -2912,18 +2912,18 @@ prose: |
 - [ ] **Step 2: Commit**
 
 ```bash
-git add .claude/skills/auto-improve/prompts/critics/brand.md
+git add .claude/plugins/auto-improve/prompts/critics/brand.md
 git commit -m "feat(auto-improve): add brand critic prompt"
 ```
 
 ### Task 35: Write the a11y-perf critic prompt
 
 **Files:**
-- Create: `.claude/skills/auto-improve/prompts/critics/a11y-perf.md`
+- Create: `.claude/plugins/auto-improve/prompts/critics/a11y-perf.md`
 
 - [ ] **Step 1: Write the prompt**
 
-Create `.claude/skills/auto-improve/prompts/critics/a11y-perf.md`:
+Create `.claude/plugins/auto-improve/prompts/critics/a11y-perf.md`:
 
 ```markdown
 # A11y/Perf Critic
@@ -2976,18 +2976,18 @@ prose: |
 - [ ] **Step 2: Commit**
 
 ```bash
-git add .claude/skills/auto-improve/prompts/critics/a11y-perf.md
+git add .claude/plugins/auto-improve/prompts/critics/a11y-perf.md
 git commit -m "feat(auto-improve): add a11y-perf critic prompt"
 ```
 
 ### Task 36: Write the synthesizer prompt
 
 **Files:**
-- Create: `.claude/skills/auto-improve/prompts/synthesizer.md`
+- Create: `.claude/plugins/auto-improve/prompts/synthesizer.md`
 
 - [ ] **Step 1: Write the prompt**
 
-Create `.claude/skills/auto-improve/prompts/synthesizer.md`:
+Create `.claude/plugins/auto-improve/prompts/synthesizer.md`:
 
 ```markdown
 # Synthesizer Subagent
@@ -3054,7 +3054,7 @@ rejection_reasons:             # ONLY on REJECT
 - [ ] **Step 2: Commit**
 
 ```bash
-git add .claude/skills/auto-improve/prompts/synthesizer.md
+git add .claude/plugins/auto-improve/prompts/synthesizer.md
 git commit -m "feat(auto-improve): add synthesizer prompt"
 ```
 
@@ -3067,13 +3067,13 @@ Wire the per-pass state machine. This is where prompt files, gate scripts, and l
 ### Task 37: Write the executing-a-pass SKILL.md
 
 **Files:**
-- Create: `.claude/skills/auto-improve/executing-a-pass/SKILL.md`
+- Create: `.claude/plugins/auto-improve/skills/executing-a-pass/SKILL.md`
 
 This is the largest skill in the package. It encodes the per-pass state machine.
 
 - [ ] **Step 1: Write the skill**
 
-Create `.claude/skills/auto-improve/executing-a-pass/SKILL.md`:
+Create `.claude/plugins/auto-improve/skills/executing-a-pass/SKILL.md`:
 
 ```markdown
 ---
@@ -3199,7 +3199,7 @@ iterations_used: <n>
 - [ ] **Step 2: Commit**
 
 ```bash
-git add .claude/skills/auto-improve/executing-a-pass
+git add .claude/plugins/auto-improve/executing-a-pass
 git commit -m "feat(auto-improve): add executing-a-pass skill"
 ```
 
@@ -3212,11 +3212,11 @@ The user-invokable entry point. Owns the outer loop, stop conditions, scope adva
 ### Task 38: Write the running-the-loop SKILL.md
 
 **Files:**
-- Create: `.claude/skills/auto-improve/running-the-loop/SKILL.md`
+- Create: `.claude/plugins/auto-improve/skills/running-the-loop/SKILL.md`
 
 - [ ] **Step 1: Write the skill**
 
-Create `.claude/skills/auto-improve/running-the-loop/SKILL.md`:
+Create `.claude/plugins/auto-improve/skills/running-the-loop/SKILL.md`:
 
 ```markdown
 ---
@@ -3322,7 +3322,7 @@ Tell the user:
 - [ ] **Step 2: Commit**
 
 ```bash
-git add .claude/skills/auto-improve/running-the-loop
+git add .claude/plugins/auto-improve/running-the-loop
 git commit -m "feat(auto-improve): add running-the-loop entry skill"
 ```
 
@@ -3424,11 +3424,11 @@ This phase is **not implementable here** because it happens on the user's other 
 ### Task 41: Document the porting checklist
 
 **Files:**
-- Create: `.claude/skills/auto-improve/PORTING.md`
+- Create: `.claude/plugins/auto-improve/PORTING.md`
 
 - [ ] **Step 1: Write the porting checklist**
 
-Create `.claude/skills/auto-improve/PORTING.md`:
+Create `.claude/plugins/auto-improve/PORTING.md`:
 
 ```markdown
 # Porting auto-improve to a real project
@@ -3437,7 +3437,7 @@ When you're ready to run this against your real Next.js project (likely on a dif
 
 ## 1. Copy the skill files
 
-From this template repo, copy `.claude/skills/auto-improve/` to the real project's `.claude/skills/auto-improve/`. Including the `samples/`, `prompts/`, `schemas/`, `scripts/`, and all four sub-skill directories.
+From this template repo, copy `.claude/plugins/auto-improve/` to the real project's `.claude/plugins/auto-improve/`. Including the `samples/`, `prompts/`, `schemas/`, `scripts/`, and all four sub-skill directories.
 
 ## 2. Add the gitignore entries
 
@@ -3461,7 +3461,7 @@ npx playwright install chromium
 
 ## 4. Author your real BRAND.md
 
-At the project root. Follow the structure in `.claude/skills/auto-improve/samples/` (look at the sample-site BRAND.md for reference). Be specific.
+At the project root. Follow the structure in `.claude/plugins/auto-improve/samples/` (look at the sample-site BRAND.md for reference). Be specific.
 
 ## 5. Drop in the Claude Design handoff bundle
 
@@ -3469,7 +3469,7 @@ At the project root: `handoff-bundle/`.
 
 ## 6. Author auto-improve.config.yaml
 
-Copy `.claude/skills/auto-improve/samples/auto-improve.config.example.yaml` to the project root and edit. Crucially, update `project:`:
+Copy `.claude/plugins/auto-improve/samples/auto-improve.config.example.yaml` to the project root and edit. Crucially, update `project:`:
 
 - `dev_server`: how the project's dev server starts (e.g., `npm run dev`)
 - `dev_url`: usually `http://localhost:3000`
@@ -3479,13 +3479,13 @@ Start with a SHORT wall_clock_hours (say, 1) for the first run. You can extend l
 
 ## 7. Author backlog.yaml
 
-Copy `.claude/skills/auto-improve/samples/backlog.example.yaml` and edit. For your first run, ONE scope is recommended. Pick something low-risk — not your hero or homepage — so failures don't damage anything important.
+Copy `.claude/plugins/auto-improve/samples/backlog.example.yaml` and edit. For your first run, ONE scope is recommended. Pick something low-risk — not your hero or homepage — so failures don't damage anything important.
 
 ## 8. Run pre-flight
 
 \`\`\`bash
-node .claude/skills/auto-improve/scripts/validate-config.mjs auto-improve.config.yaml
-node .claude/skills/auto-improve/scripts/validate-backlog.mjs backlog.yaml
+node .claude/plugins/auto-improve/scripts/validate-config.mjs auto-improve.config.yaml
+node .claude/plugins/auto-improve/scripts/validate-backlog.mjs backlog.yaml
 \`\`\`
 
 Both must pass.
@@ -3532,7 +3532,7 @@ git for-each-ref --format='%(refname:short)' "refs/heads/auto-improve/<run-id>/*
 - [ ] **Step 2: Commit**
 
 ```bash
-git add .claude/skills/auto-improve/PORTING.md
+git add .claude/plugins/auto-improve/PORTING.md
 git commit -m "feat(auto-improve): add porting checklist for real-project use"
 ```
 
