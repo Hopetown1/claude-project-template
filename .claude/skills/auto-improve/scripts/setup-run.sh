@@ -2,7 +2,7 @@
 # Sets up a new auto-improve run.
 # Usage: setup-run.sh
 # Prints the run-id on stdout. Side effects:
-#   - Cuts auto-improve/<run-id> from main
+#   - Cuts auto-improve/<run-id>/trunk from main
 #   - Creates docs/runs/<run-id>/{log.md,rejected_proposals/}
 #   - Pre-condition: working tree must be clean
 
@@ -22,7 +22,7 @@ fi
 
 scripts_dir="$(cd "$(dirname "$0")" && pwd)"
 run_id="$("$scripts_dir/compute-run-id.sh")"
-trunk="auto-improve/${run_id}"
+trunk="auto-improve/${run_id}/trunk"
 
 git checkout main >/dev/null 2>&1
 git checkout -b "$trunk" >/dev/null 2>&1
