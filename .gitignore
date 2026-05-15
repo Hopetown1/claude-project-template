@@ -1,3 +1,6 @@
+# node
+node_modules/
+
 # auto-improve run artifacts (per-run, not part of project history)
 auto-improve.config.yaml
 backlog.yaml
