@@ -24,8 +24,8 @@ scripts_dir="$(cd "$(dirname "$0")" && pwd)"
 run_id="$("$scripts_dir/compute-run-id.sh")"
 trunk="auto-improve/${run_id}"
 
-git checkout main
-git checkout -b "$trunk"
+git checkout main >/dev/null 2>&1
+git checkout -b "$trunk" >/dev/null 2>&1
 
 mkdir -p "docs/runs/${run_id}/rejected_proposals"
 cat > "docs/runs/${run_id}/log.md" <<EOF
