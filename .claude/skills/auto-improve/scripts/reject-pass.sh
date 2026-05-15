@@ -12,7 +12,7 @@ fi
 
 run_id="$1"
 old_branch="$2"
-pass_num="$3"
+pass_num="$(printf "%02d" "$3")"
 scope="$4"
 proposal="$5"
 trunk="auto-improve/${run_id}/trunk"
