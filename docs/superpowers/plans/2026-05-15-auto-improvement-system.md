@@ -2088,7 +2088,7 @@ import { spawn } from "node:child_process";
 import { writeFileSync, readFileSync } from "node:fs";
 import yaml from "js-yaml";
 import { chromium } from "playwright";
-import AxeBuilder from "@axe-core/playwright";
+import { AxeBuilder } from "@axe-core/playwright";
 
 const outPath = process.argv[2];
 if (!outPath) { console.error("Usage: axe.mjs <out-path>"); process.exit(2); }
@@ -2124,7 +2124,7 @@ try {
 
   for (const route of routes) {
     await page.goto(`${devUrl}${route}`, { waitUntil: "networkidle" });
-    const r = await new AxeBuilder.default({ page }).analyze();
+    const r = await new AxeBuilder({ page }).analyze();
     const critical = r.violations.filter((v) => v.impact === "critical").length;
     const serious = r.violations.filter((v) => v.impact === "serious").length;
     totalCritical += critical;
