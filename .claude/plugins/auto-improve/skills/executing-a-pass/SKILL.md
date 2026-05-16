@@ -67,7 +67,7 @@ Take fresh after-screenshots. Then dispatch all four critics **in parallel** in 
 
 - design-system: DIFF, BEFORE/AFTER screenshots, DESIGN_CONTRACT, tokens.json
 - ux: DIFF, BEFORE/AFTER screenshots, SCOPE.purpose, PROPOSAL_TEXT
-- brand: DIFF, BEFORE/AFTER rendered text, BRAND.md
+- brand: DIFF, BEFORE/AFTER rendered text, BRAND.md, PROPOSAL_TEXT
 - a11y-perf: DIFF, Lighthouse JSON, axe JSON, BEFORE/AFTER screenshots
 
 Critic prompt files live at `${CLAUDE_PLUGIN_ROOT}/prompts/critics/<name>.md`.
