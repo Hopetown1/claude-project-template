@@ -44,7 +44,7 @@ docs/runs/
 Run, in the project root:
 
 ```bash
-npm install --save-dev ajv ajv-formats js-yaml playwright @lhci/cli @axe-core/playwright pixelmatch pngjs
+npm install --save-dev ajv ajv-formats js-yaml playwright @lhci/cli @axe-core/playwright
 npx playwright install chromium
 ```
 
