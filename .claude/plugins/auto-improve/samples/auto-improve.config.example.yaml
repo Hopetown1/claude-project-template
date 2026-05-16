@@ -25,3 +25,7 @@ project:
   lint_command: "npm --prefix examples/sample-site run lint"
   test_command: "echo 'no tests yet' && exit 0"
   typescript_command: "cd examples/sample-site && npx tsc --noEmit"
+  # Branch the run's trunk is cut from. Defaults to "main".
+  # Override via $AUTO_IMPROVE_TRUNK_BASE, or set here if your project
+  # uses a different default branch (e.g. master, develop).
+  # trunk_base: main

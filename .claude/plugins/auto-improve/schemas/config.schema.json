@@ -45,7 +45,8 @@
         "build_command": { "type": "string", "minLength": 1 },
         "lint_command": { "type": "string", "minLength": 1 },
         "test_command": { "type": "string", "minLength": 1 },
-        "typescript_command": { "type": "string", "minLength": 1 }
+        "typescript_command": { "type": "string", "minLength": 1 },
+        "trunk_base": { "type": "string", "minLength": 1 }
       },
       "additionalProperties": false
     }

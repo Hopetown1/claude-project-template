@@ -2,7 +2,9 @@
 # Sets up a new auto-improve run.
 # Usage: setup-run.sh
 # Prints the run-id on stdout. Side effects:
-#   - Cuts auto-improve/<run-id>/trunk from main
+#   - Cuts auto-improve/<run-id>/trunk from the configured trunk-base branch
+#     (default: main; override via $AUTO_IMPROVE_TRUNK_BASE or
+#     project.trunk_base in auto-improve.config.yaml)
 #   - Creates docs/runs/<run-id>/{log.md,rejected_proposals/}
 #   - Pre-condition: working tree must be clean
 
@@ -15,16 +17,26 @@ if ! git diff-index --quiet HEAD --; then
   exit 1
 fi
 
-if ! git rev-parse --verify --quiet main >/dev/null; then
-  echo "ERROR: no 'main' branch found." >&2
+scripts_dir="$(cd "$(dirname "$0")" && pwd)"
+
+# Resolve trunk-base: env var > config field > "main".
+if [[ -n "${AUTO_IMPROVE_TRUNK_BASE:-}" ]]; then
+  trunk_base="$AUTO_IMPROVE_TRUNK_BASE"
+elif [[ -f auto-improve.config.yaml ]]; then
+  trunk_base="$(node "$scripts_dir/read-config.mjs" auto-improve.config.yaml project.trunk_base main)"
+else
+  trunk_base="main"
+fi
+
+if ! git rev-parse --verify --quiet "$trunk_base" >/dev/null; then
+  echo "ERROR: trunk-base branch '$trunk_base' not found." >&2
   exit 1
 fi
 
-scripts_dir="$(cd "$(dirname "$0")" && pwd)"
 run_id="$("$scripts_dir/compute-run-id.sh")"
 trunk="auto-improve/${run_id}/trunk"
 
-git checkout main >/dev/null 2>&1
+git checkout "$trunk_base" >/dev/null 2>&1
 git checkout -b "$trunk" >/dev/null 2>&1
 
 mkdir -p "docs/runs/${run_id}/rejected_proposals"
