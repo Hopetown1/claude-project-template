@@ -66,7 +66,7 @@ If any gate fails: build a `change_brief` from the failure JSON, increment itera
 Take fresh after-screenshots. Then dispatch all four critics **in parallel** in a single tool-use turn. Each critic is a fresh subagent with narrow inputs:
 
 - design-system: DIFF, BEFORE/AFTER screenshots, DESIGN_CONTRACT, tokens.json
-- ux: DIFF, BEFORE/AFTER screenshots, SCOPE.purpose
+- ux: DIFF, BEFORE/AFTER screenshots, SCOPE.purpose, PROPOSAL_TEXT
 - brand: DIFF, BEFORE/AFTER rendered text, BRAND.md
 - a11y-perf: DIFF, Lighthouse JSON, axe JSON, BEFORE/AFTER screenshots
 
