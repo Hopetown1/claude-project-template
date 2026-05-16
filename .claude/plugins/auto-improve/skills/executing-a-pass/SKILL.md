@@ -58,7 +58,6 @@ Run gate scripts in this order, fail fast:
 3. `${CLAUDE_PLUGIN_ROOT}/scripts/gates/test.sh /tmp/<RUN_ID>-<PASS_NUMBER>-test.json`
 4. `node ${CLAUDE_PLUGIN_ROOT}/scripts/gates/lighthouse.mjs /tmp/<RUN_ID>-<PASS_NUMBER>-lh.json`
 5. `node ${CLAUDE_PLUGIN_ROOT}/scripts/gates/axe.mjs /tmp/<RUN_ID>-<PASS_NUMBER>-axe.json`
-6. `node ${CLAUDE_PLUGIN_ROOT}/scripts/gates/visual-regression.mjs <baseline-dir> <current-dir> /tmp/<RUN_ID>-<PASS_NUMBER>-vr.json`
 
 If any gate fails: build a `change_brief` from the failure JSON, increment iteration count, return to IMPLEMENTING. If iteration count reaches `iteration_cap_per_pass`, REJECT.
 

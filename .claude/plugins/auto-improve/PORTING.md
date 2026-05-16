@@ -116,7 +116,6 @@ git for-each-ref --format='%(refname:short)' "refs/heads/auto-improve/<run-id>/*
 
 ## Known shake-out items
 
-- **Visual regression noise.** Tune the threshold in `gates/visual-regression.mjs` if real-project fonts and animations push false positives.
 - **Critic verbosity on big diffs.** A real production page has more code than the sample. Critics may slow down or run out of context. Watch for it.
 - **Dev server lifecycle.** Some projects have slow start times. Increase the `waitFor` timeout in `screenshot.mjs` and gate scripts if needed.
 - **TypeScript path aliases.** If the real project uses path aliases that the sample didn't, gate scripts that hard-code paths may need updating.

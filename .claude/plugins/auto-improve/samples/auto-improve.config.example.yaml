@@ -17,7 +17,6 @@ gates:
   - test
   - lighthouse
   - axe
-  - visual-regression
 project:
   dev_server: "npm --prefix examples/sample-site run dev"
   dev_url: "http://localhost:3000"

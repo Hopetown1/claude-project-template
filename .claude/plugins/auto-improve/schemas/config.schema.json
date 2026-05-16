@@ -32,7 +32,7 @@
     },
     "gates": {
       "type": "array",
-      "items": { "enum": ["typescript", "lint", "test", "lighthouse", "axe", "visual-regression"] },
+      "items": { "enum": ["typescript", "lint", "test", "lighthouse", "axe"] },
       "minItems": 1,
       "uniqueItems": true
     },

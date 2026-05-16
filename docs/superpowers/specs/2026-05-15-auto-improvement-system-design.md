@@ -93,8 +93,9 @@ gates:
   - test
   - lighthouse
   - axe
-  - visual-regression
 ```
+
+(Phase 7 finding: a `visual-regression` gate was originally specified and implemented. Removed during Phase 7 dry-run because comparing pre-pass vs post-pass screenshots within a single pass is structurally at odds with the loop's purpose — every successful pass intentionally changes pixels on the routes it owns. Visual judgment is delegated to the design-system and UX critics, which already see before/after screenshots and can reason about *whether* the change is an improvement, not just *whether* pixels moved.)
 
 ## Backlog
 
@@ -190,7 +191,7 @@ SELECTING_SCOPE → PROPOSING → IMPLEMENTING → GATING → CRITIQUING
 | `SELECTING_SCOPE` | Planner subagent reads `backlog.yaml`, returns top scope. May append discovered sub-scopes. | If backlog empty: stop. If planner BLOCKED: stop. |
 | `PROPOSING` | Proposer subagent reads scope + `DESIGN_CONTRACT.md` + `BRAND.md` + current site state + `rejected_proposals/<scope>.yaml`. Drafts one concrete proposal. | NEEDS_CONTEXT: re-dispatch with more. BLOCKED: skip, try fresh proposal. |
 | `IMPLEMENTING` | Implementer subagent on a fresh pass branch, follows TDD discipline (uses `superpowers:test-driven-development`), commits. | DONE / NEEDS_CONTEXT / BLOCKED per superpowers protocol. |
-| `GATING` | Sequential automated gates: TS compile → lint → tests → Lighthouse → axe → visual-regression. Fail fast. | Any gate fails: REQUEST_CHANGES with gate output; back to IMPLEMENTING. Counts toward iteration cap. |
+| `GATING` | Sequential automated gates: TS compile → lint → tests → Lighthouse → axe. Fail fast. | Any gate fails: REQUEST_CHANGES with gate output; back to IMPLEMENTING. Counts toward iteration cap. |
 | `CRITIQUING` | Four critic subagents dispatched **in parallel**, fresh context each, narrow inputs each. Each returns a structured score report. | Individual critic failure: retry once. Persistent failure: synthesizer sees N-1 reports and is told one is missing. |
 | `SYNTHESIZING` | Synthesizer subagent reads all 4 reports + gate output + scope's prior-accepted score. Issues verdict. | — |
 | `ACCEPTED` | Merge pass branch into trunk with `--no-ff`. Generate PR-style summary block for the log. | — |
@@ -390,7 +391,7 @@ These are real engineering decisions that belong in the plan, not the design:
 1. **Plugin packaging.** Standalone plugin repo (`auto-improve`), or initially scaffolded as `.claude/skills/` inside this template repo and extracted later? Recommend the latter for v1 — fewer moving parts to test.
 2. **Subagent dispatch mechanism.** The orchestrator skill dispatches subagents via the `Agent` tool from the parent session. Each role (planner, proposer, implementer, critics, synthesizer) gets its own prompt file and a documented dispatch pattern in the running-the-loop skill.
 3. **Screenshot harness.** Playwright is the obvious choice. Needs a small `scripts/screenshot.sh` (or `.ts`) that boots the dev server, navigates to the route, captures desktop + mobile screenshots, tears down. Reused across passes.
-4. **Gate scripts.** Each gate (`typescript`, `lint`, `test`, `lighthouse`, `axe`, `visual-regression`) is a small executable script under `scripts/gates/<name>.sh` that exits 0 on pass, non-zero on fail, and writes a JSON report to a known location for the a11y-perf critic to consume. Project-specific bits (the actual `tsc` command, the test runner) come from `auto-improve.config.yaml` overrides or just the project's `package.json` scripts.
+4. **Gate scripts.** Each gate (`typescript`, `lint`, `test`, `lighthouse`, `axe`) is a small executable script under `scripts/gates/<name>.sh` that exits 0 on pass, non-zero on fail, and writes a JSON report to a known location for the a11y-perf critic to consume. Project-specific bits (the actual `tsc` command, the test runner) come from `auto-improve.config.yaml` overrides or just the project's `package.json` scripts.
 5. **Critic dispatch model.** Whether to use the most capable model for critics, or differentiate (cheap model for design-system token check, capable model for brand judgment). Decide at plan time based on initial cost estimates.
 
 ## Phasing (Implementation Plan Will Refine)
